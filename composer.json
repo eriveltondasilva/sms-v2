@@ -74,17 +74,23 @@
             "Composer\\Config::disableProcessTimeout",
             "bunx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"bun run dev\" --names='server,queue,vite'"
         ],
-        "test": [
+        "tests": [
             "@php artisan config:clear --ansi",
             "@lint",
             "@php artisan test"
         ],
+        "1xxx": "",
         "lint": "pint --parallel --test",
         "lint:fix": "pint --parallel --dirty",
         "lint:ci": "pint --test",
         "rector": "rector process --dry-run",
         "rector:fix": "rector process",
-        "types": "phpstan analyse --memory-limit=2G"
+        "types": "phpstan analyse --memory-limit=2G",
+        "2xxx": "",
+        "test": "pest",
+        "test:watch": "pest --watch",
+        "test:cover": "pest --coverage --min=80",
+        "test:ci": "pest --bail"
     },
     "extra": {
         "laravel": {
