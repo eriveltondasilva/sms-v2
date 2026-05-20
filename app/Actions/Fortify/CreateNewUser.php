@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Fortify;
 
 use App\Concerns\PasswordValidationRules;
@@ -10,7 +12,8 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
 {
-    use PasswordValidationRules, ProfileValidationRules;
+    use PasswordValidationRules;
+    use ProfileValidationRules;
 
     /**
      * Validate and create a newly registered user.
@@ -24,9 +27,9 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
+        return User::query()->create([
+            'name'     => $input['name'],
+            'email'    => $input['email'],
             'password' => $input['password'],
         ]);
     }
