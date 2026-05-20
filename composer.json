@@ -92,9 +92,9 @@
             "@rector:fix",
             "@types"
         ],
-        "test": "pest --ansi",
-        "test:watch": "pest --watch --ansi",
-        "test:cover": "pest --coverage --min=80 --ansi",
+        "test": "pest",
+        "test:watch": "pest --watch",
+        "test:cover": "pest --coverage --min=80",
         "test:ci": "pest --bail"
     },
     "extra": {
