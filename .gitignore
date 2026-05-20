@@ -17,6 +17,7 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+.eslintcache
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -28,4 +29,4 @@ yarn-error.log
 /.vscode
 /.zed
 /.agents
-/.eslintcache
+/tmp
