@@ -36,6 +36,9 @@ jobs:
       - name: Run Pint
         run: composer lint:ci
 
+      - name: Run PHPStan
+        run: composer types
+
       - name: Format Frontend
         run: bun run fmt:ci
 

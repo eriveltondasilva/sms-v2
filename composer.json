@@ -80,16 +80,21 @@
             "@php artisan test"
         ],
         "1xxx": "",
-        "lint": "pint --parallel --test",
-        "lint:fix": "pint --parallel --dirty",
+        "lint": "pint --parallel --test --ansi",
+        "lint:fix": "pint --parallel --ansi",
         "lint:ci": "pint --test",
-        "rector": "rector process --dry-run",
-        "rector:fix": "rector process",
-        "types": "phpstan analyse --memory-limit=2G",
+        "rector": "rector process --dry-run --ansi",
+        "rector:fix": "rector process --ansi",
+        "types": "phpstan analyse --memory-limit=2G --ansi",
         "2xxx": "",
-        "test": "pest",
-        "test:watch": "pest --watch",
-        "test:cover": "pest --coverage --min=80",
+        "fix": [
+            "@lint:fix",
+            "@rector:fix",
+            "@types"
+        ],
+        "test": "pest --ansi",
+        "test:watch": "pest --watch --ansi",
+        "test:cover": "pest --coverage --min=80 --ansi",
         "test:ci": "pest --bail"
     },
     "extra": {
