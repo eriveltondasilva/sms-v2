@@ -17,6 +17,7 @@
         "laravel/wayfinder": "^0.1.14"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.3",
         "fakerphp/faker": "^1.24",
         "larastan/larastan": "^3.0",
         "laravel/boost": "^2.2",
@@ -75,12 +76,14 @@
         ],
         "test": [
             "@php artisan config:clear --ansi",
-            "@lint:check",
+            "@lint",
             "@php artisan test"
         ],
+        "lint": "pint --parallel --test",
         "lint:fix": "pint --parallel --dirty",
-        "lint:check": "pint --parallel --test",
         "lint:ci": "pint --test",
+        "rector": "rector process --dry-run",
+        "rector:fix": "rector process",
         "types": "phpstan analyse --memory-limit=2G"
     },
     "extra": {
