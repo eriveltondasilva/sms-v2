@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\Config\RectorConfig;
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Php85\Rector\Property\AddOverrideAttributeToOverriddenPropertiesRector;
 use RectorLaravel\Set\LaravelLevelSetList;
 use RectorLaravel\Set\LaravelSetList;
 
@@ -39,6 +42,9 @@ return RectorConfig::configure()
     ->withSkip([
         __DIR__ . '/bootstrap/cache',
         __DIR__ . '/storage',
+    AddOverrideAttributeToOverriddenMethodsRector::class,
+    MakeInheritedMethodVisibilitySameAsParentRector::class,
+    AddOverrideAttributeToOverriddenPropertiesRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,
