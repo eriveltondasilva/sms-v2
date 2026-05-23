@@ -94,10 +94,11 @@
             "@rector:fix",
             "@types"
         ],
-        "test": "pest",
-        "test:watch": "pest --watch",
-        "test:cover": "pest --coverage --min=80",
-        "test:ci": "pest --bail"
+        "3xxx": "",
+        "test": "pest --testsuite Unit",
+        "test:watch": "@test --watch",
+        "test:cover": "@test --coverage --min=80",
+        "test:ci": "@test --bail"
     },
     "extra": {
         "laravel": {
