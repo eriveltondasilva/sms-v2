@@ -40,4 +40,9 @@ enum RoleEnum: string
             self::Teacher    => 'green',
         };
     }
+
+    public function isGlobal(): bool
+    {
+        return $this === self::SuperAdmin;
+    }
 }
