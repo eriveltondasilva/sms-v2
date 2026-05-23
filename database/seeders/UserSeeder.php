@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Context;
 
 class UserSeeder extends Seeder
 {
@@ -15,13 +16,22 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $school = Context::get('school-demo');
+
         foreach (RoleEnum::cases() as $role) {
-            User::factory()
-                ->create([
-                    'name'  => $role->label(),
-                    'email' => "{$role->value}@example.com",
-                ])
-                ->assignRole($role->value);
+            $schoolId = $role->isGlobal() ? null : $school->id;
+
+            $user = User::factory()->create([
+                'name'  => $role->label(),
+                'email' => "{$role->value}@example.com",
+            ]);
+
+            $user->assignRole($role->value);
+
+            if (! $role->isGlobal()) {
+                $user->schools()->attach($school->id, ['is_active' => true]);
+            }
         }
     }
 }

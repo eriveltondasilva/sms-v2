@@ -20,6 +20,7 @@ class RoleSeeder extends Seeder
                 'label'       => $role->label(),
                 'description' => $role->description(),
                 'color'       => $role->color(),
+                'guard_name'  => 'web',
             ]);
         }
     }
