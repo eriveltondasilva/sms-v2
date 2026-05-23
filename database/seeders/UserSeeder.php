@@ -20,8 +20,6 @@ class UserSeeder extends Seeder
         $school = Context::get('school-demo');
 
         foreach (RoleEnum::cases() as $role) {
-            $schoolId = $role->isGlobal() ? null : $school->id;
-
             $user = User::factory()->create([
                 'name'  => $role->label(),
                 'email' => "{$role->value}@example.com",
@@ -30,7 +28,7 @@ class UserSeeder extends Seeder
             $user->assignRole($role->value);
 
             if (! $role->isGlobal()) {
-                $user->schools()->attach($school->id, ['is_active' => true]);
+                $user->schools()->attach($school->id, ['is_revoked' => false]);
             }
         }
     }
