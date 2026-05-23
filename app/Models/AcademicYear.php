@@ -49,7 +49,7 @@ class AcademicYear extends Model
     {
         $today = now()->toDateString();
 
-        return $this->starts_at->{$today}
+        return $this->starts_at->toDateString() <= $today
             && $this->ends_at->toDateString() >= $today;
     }
 }

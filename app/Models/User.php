@@ -71,17 +71,11 @@ class User extends Authenticatable
         return $this->schools->firstWhere('id', $schoolId);
     }
 
-
     public function hasSchool(int $schoolId): bool
     {
         return $this->schools
             ->where('id', $schoolId)
             ->where('pivot.is_revoked', false)
             ->isNotEmpty();
-    }
-
-    public function belongsToSchool(int $schoolId): bool
-    {
-        return $this->school_id === $schoolId;
     }
 }
