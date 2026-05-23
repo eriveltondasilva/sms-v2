@@ -10,6 +10,9 @@ parameters:
         - database/
         - routes/
 
+    excludePaths:
+        - app/Concerns/*
+
     level: 5
 
     tmpDir: /tmp/phpstan

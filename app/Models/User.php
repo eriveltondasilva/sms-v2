@@ -21,9 +21,10 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory;
+
+    use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
 
     /**
      * Get the attributes that should be cast.
