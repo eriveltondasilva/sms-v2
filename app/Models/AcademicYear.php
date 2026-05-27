@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Traits\HasSchool;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,11 +12,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int $school_id
+ * @property Carbon $starts_at
+ * @property Carbon $ends_at
+ * @property bool $is_active
+ */
 #[Fillable(['school_id', 'name', 'starts_at', 'ends_at', 'is_active'])]
 class AcademicYear extends Model
 {
     use HasFactory;
-    use HasSchool;
     use SoftDeletes;
 
     protected function casts(): array
@@ -47,9 +53,6 @@ class AcademicYear extends Model
 
     public function isOngoing(): bool
     {
-        $today = now()->toDateString();
-
-        return $this->starts_at->toDateString() <= $today
-            && $this->ends_at->toDateString() >= $today;
+        return $this->starts_at->isPast() && $this->ends_at->isFuture();
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\RoleEnum;
+use App\Enums\Role;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -36,7 +36,7 @@ class User extends Authenticatable
         ];
     }
 
-    #region Relationships
+    // region Relationships
 
     /**
      * @return BelongsToMany<School, $this>
@@ -48,16 +48,16 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    #endregion
+    // endregion
 
     public function isSuperAdmin(): bool
     {
-        return $this->hasRole(RoleEnum::SuperAdmin);
+        return $this->hasRole(Role::SuperAdmin);
     }
 
     public function isAdmin(): bool
     {
-        return $this->hasRole(RoleEnum::Admin);
+        return $this->hasRole(Role::Admin);
     }
 
     public function activeSchool(): ?School

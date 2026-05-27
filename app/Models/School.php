@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 #[Fillable([
     'full_name',
@@ -32,13 +33,15 @@ class School extends Model
     protected function casts(): array
     {
         return [
-            'is_active' => 'boolean',
+            'is_active'     => 'boolean',
             'social_medias' => 'array',
         ];
     }
 
-    #region Relationships
-
+    // region Relationships
+    /**
+     * @return BelongsToMany<User, $this, Pivot>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
@@ -62,7 +65,7 @@ class School extends Model
         return $this->hasOne(AcademicYear::class)->where('is_active', true);
     }
 
-    #endregion
+    // endregion
 
     #[Scope]
     protected function active(Builder $query): Builder
