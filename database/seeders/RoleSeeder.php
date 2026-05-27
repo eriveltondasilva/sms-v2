@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\RoleEnum;
+use App\Enums\Role as RoleEnum;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 

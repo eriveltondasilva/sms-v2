@@ -15,19 +15,22 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
+        $r = fn ($s): ?string => preg_replace("/\D/", '', (string) $s);
+
         $school = School::query()->firstOrCreate(
             ['slug' => 'escola-demo'],
             [
                 'full_name'  => 'Escola Demo',
                 'short_name' => 'ED',
-                'slug'       => 'escola-demo',
                 'motto'      => 'Adipisicing duis anim deserunt aute adipisicing deserunt qui consequat consequat.',
-                'inep_code'  => '00000000',
-                'cnpj'       => '00.000.000/0001-00',
-                'phone'      => '(82) 99999-9999',
-                'email'      => 'contato@escola-demo.com',
-                'address'    => 'Av. Brasil, 123, Bairro, Cidade - Estado',
-                'is_active'  => true,
+
+                'inep_code' => '00000000',
+                'cnpj'      => $r('00.000.000/0001-00'),
+                'phone'     => $r('(82) 9 8765-4321'),
+                'email'     => 'contato@escola-demo.com',
+                'address'   => 'Av. Brasil, 123, Bairro, Cidade - Estado',
+
+                'is_active' => true,
             ],
         );
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\RoleEnum;
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Context;
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
 
         $school = Context::get('school-demo');
 
-        foreach (RoleEnum::cases() as $role) {
+        foreach (Role::cases() as $role) {
             $user = User::factory()->create([
                 'name'  => $role->label(),
                 'email' => "{$role->value}@example.com",
