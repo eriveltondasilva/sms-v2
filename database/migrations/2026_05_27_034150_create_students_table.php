@@ -57,6 +57,7 @@ return new class() extends Migration
             // #
 
             $table->unique(['school_id', 'registration'], 'unq_registration_per_school');
+            $table->unique(['school_id', 'cpf'], 'unq_cpf_per_school');
 
             $table->index('cpf');
             $table->index(['school_id', 'full_name']);
@@ -68,7 +69,6 @@ return new class() extends Migration
             ADD CONSTRAINT check_students_gender
             CHECK (gender IN ('M','F','N'))
         ");
-
     }
 
     public function down(): void

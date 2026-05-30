@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -15,32 +14,30 @@ return new class() extends Migration
             $table->id();
 
             $table->foreignId('teaching_assignment_id')->constrained()->restrictOnDelete();
+            $table->foreignId('lesson_plan_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
             $table->foreignId('recorded_by')->nullable()->constrained('users')->nullOnDelete();
 
             $table->date('lesson_date');
-            $table->unsignedSmallInteger('lessons_given')->default(1);
+            $table->time('start_time');
 
-            $table->timestamp('recorded_at')->nullable();
+            $table->text('topic')->nullable();
+            $table->timestamp('diary_filled_at')->nullable();
+
             $table->timestamps();
 
             // #
 
             $table->unique(
-                ['teaching_assignment_id', 'lesson_date'],
-                'unique_teaching_assignment_and_lesson_date'
+                ['teaching_assignment_id', 'lesson_date', 'start_time'],
+                'unq_lr_ta_date_time'
             );
 
-            $table->index('teaching_assignment_id');
             $table->index(['school_id', 'lesson_date']);
+            $table->index(['teaching_assignment_id', 'lesson_date']);
+            $table->index('lesson_plan_id');
             $table->index('recorded_by');
         });
-
-        DB::statement('
-            ALTER TABLE lesson_records
-            ADD CONSTRAINT check_lr_lessons_given
-            CHECK (lessons_given >= 1)
-        ');
     }
 
     public function down(): void

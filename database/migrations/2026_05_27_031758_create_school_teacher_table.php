@@ -18,7 +18,7 @@ return new class() extends Migration
 
             $table->string('qualification')->nullable();
             $table->date('hire_date')->nullable();
-            $table->date('terminated_at')->nullable();
+            $table->date('termination_date')->nullable();
             $table->string('termination_reason', 50)->nullable();
 
             $table->boolean('is_active')->default(true);

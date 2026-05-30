@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -27,6 +28,12 @@ return new class() extends Migration
 
             $table->index('guardian_id');
         });
+
+        DB::statement('
+    CREATE UNIQUE INDEX unq_one_primary_guardian_per_student
+    ON student_guardian (student_id)
+    WHERE is_primary = true
+');
     }
 
     public function down(): void

@@ -12,11 +12,12 @@ return new class() extends Migration
     {
         Schema::create('school_user', function (Blueprint $table): void {
             $table->id();
+
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
             $table->string('role', 30);
-            $table->boolean('is_revoked')->default(false);
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
 
@@ -24,7 +25,7 @@ return new class() extends Migration
 
             $table->unique(['user_id', 'school_id']);
 
-            $table->index(['school_id', 'role', 'is_revoked']);
+            $table->index(['school_id', 'role', 'is_active']);
             $table->index(['user_id', 'is_active']);
         });
     }

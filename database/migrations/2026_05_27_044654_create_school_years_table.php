@@ -65,9 +65,9 @@ return new class() extends Migration
         ');
 
         DB::statement("
-            CREATE UNIQUE INDEX unq_sy_in_progress
+            CREATE UNIQUE INDEX unique_sy_in_progress
             ON school_years (school_id)
-            WHERE status = 'in_progress',
+            WHERE status = 'in_progress'
         ");
     }
 
