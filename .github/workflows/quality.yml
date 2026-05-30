@@ -34,7 +34,7 @@ jobs:
           bun install --frozen-lockfile
 
       - name: Run Pint
-        run: composer lint:ci
+        run: composer pint:ci
 
       - name: Run PHPStan
         run: composer types
