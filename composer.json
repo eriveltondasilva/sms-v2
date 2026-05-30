@@ -82,23 +82,27 @@
             "@php artisan test"
         ],
         "1xxx": "",
-        "lint": "pint --parallel --test --ansi",
-        "lint:fix": "pint --parallel --ansi",
-        "lint:ci": "pint --test",
+        "pint": "pint --parallel --test --ansi",
+        "pint:fix": "pint --ansi",
+        "pint:ci": "pint --test",
         "rector": "rector process --dry-run --ansi",
         "rector:fix": "rector process --ansi",
         "types": "phpstan analyse --memory-limit=1G --ansi",
         "2xxx": "",
         "fix": [
-            "@lint:fix",
             "@rector:fix",
+            "@pint:fix"
+        ],
+        "ci": [
+            "@pint:ci",
+            "@rector",
             "@types"
         ],
         "3xxx": "",
-        "test": "pest --testsuite Unit",
-        "test:watch": "@test --watch",
-        "test:cover": "@test --coverage --min=80",
-        "test:ci": "@test --bail"
+        "test:unit": "pest --testsuite Unit",
+        "test:watch": "@test:unit --watch",
+        "test:cover": "@test:unit --coverage --min=80",
+        "test:ci": "@test:unit --bail"
     },
     "extra": {
         "laravel": {
