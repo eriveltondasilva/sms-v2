@@ -60,6 +60,7 @@ return new class() extends Migration
             $table->unique(['school_id', 'cpf'], 'unq_cpf_per_school');
 
             $table->index('cpf');
+            $table->index('registration');
             $table->index(['school_id', 'full_name']);
             $table->index(['school_id', 'status']);
         });

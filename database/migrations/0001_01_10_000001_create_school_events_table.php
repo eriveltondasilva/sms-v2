@@ -44,6 +44,12 @@ return new class() extends Migration
             $table->index('created_by');
         });
 
+        DB::statement("
+    ALTER TABLE school_events
+    ADD CONSTRAINT chk_event_type
+    CHECK (type IN ('holiday', 'recess', 'exam', 'meeting', 'activity', 'other'))
+");
+
         DB::statement('
             ALTER TABLE school_events
             ADD CONSTRAINT chk_event_dates

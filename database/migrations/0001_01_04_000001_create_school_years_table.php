@@ -73,7 +73,7 @@ return new class() extends Migration
 
     public function down(): void
     {
-        DB::statement('DROP INDEX IF EXISTS unq_sy_in_progress');
+        DB::statement('DROP INDEX IF EXISTS unique_sy_in_progress');
         Schema::dropIfExists('school_years');
     }
 };

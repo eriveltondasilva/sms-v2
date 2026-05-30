@@ -12,6 +12,7 @@ return new class() extends Migration
     {
         Schema::create('guardians', function (Blueprint $table): void {
             $table->id();
+
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
 
             $table->string('name');
@@ -28,6 +29,7 @@ return new class() extends Migration
             $table->unique(['school_id', 'cpf'], 'school_guardian_unique');
 
             $table->index('cpf');
+            $table->index('school_id');
         });
     }
 

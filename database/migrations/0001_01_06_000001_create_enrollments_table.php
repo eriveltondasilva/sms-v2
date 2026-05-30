@@ -42,6 +42,12 @@ return new class() extends Migration
         });
 
         DB::statement("
+    ALTER TABLE enrollments
+    ADD CONSTRAINT chk_enrollment_final_result
+    CHECK (final_result IN ('approved', 'failed', 'transferred', 'dropout') OR final_result IS NULL)
+");
+
+        DB::statement("
             CREATE UNIQUE
             INDEX unq_active_enrollment
             ON enrollments (student_id, school_year_id)

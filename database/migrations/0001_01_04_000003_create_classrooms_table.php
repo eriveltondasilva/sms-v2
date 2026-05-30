@@ -16,10 +16,12 @@ return new class() extends Migration
             $table->foreignId('school_year_id')->constrained()->restrictOnDelete();
             $table->foreignId('offered_grade_level_id')->constrained()->restrictOnDelete();
             $table->foreignId('main_teacher_id')->nullable()->constrained('teachers')->nullOnDelete();
+            $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
             $table->string('name', 50);
             $table->string('room', 30)->nullable();
             $table->string('shift', 20)->nullable();
+
             $table->unsignedSmallInteger('student_max')->default(30);
 
             $table->boolean('is_active')->default(true);
@@ -34,8 +36,9 @@ return new class() extends Migration
                 'unq_classrooms_sy_ogl_name'
             );
 
-            $table->index(['school_year_id', 'name']);
+            $table->index(['school_id', 'is_active']);
             $table->index(['school_year_id', 'is_active']);
+            $table->index(['school_year_id', 'name']);
             $table->index(['offered_grade_level_id', 'is_active']);
             $table->index('main_teacher_id');
         });
