@@ -50,7 +50,7 @@ return new class() extends Migration
                 'unq_period_grade'
             );
 
-              $table->index(['school_id', 'academic_period_id']);
+            $table->index(['school_id', 'academic_period_id']);
             $table->index(['academic_period_id', 'status']);
             $table->index(['teaching_assignment_id', 'status']);
         });
