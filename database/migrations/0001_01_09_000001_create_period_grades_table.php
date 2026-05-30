@@ -18,6 +18,7 @@ return new class() extends Migration
             $table->foreignId('enrollment_id')->constrained()->restrictOnDelete();
             $table->foreignId('teaching_assignment_id')->constrained()->restrictOnDelete();
             $table->foreignId('academic_period_id')->constrained()->restrictOnDelete();
+            $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
             $table->decimal('calculated_grade', 5, 2);
             $table->decimal('recovery_grade', 5, 2)->nullable();
@@ -49,6 +50,7 @@ return new class() extends Migration
                 'unq_period_grade'
             );
 
+              $table->index(['school_id', 'academic_period_id']);
             $table->index(['academic_period_id', 'status']);
             $table->index(['teaching_assignment_id', 'status']);
         });
