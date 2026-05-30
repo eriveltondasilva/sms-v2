@@ -11,8 +11,6 @@ return new class() extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table): void {
-            $table->nullableMorphs('profile');
-
             $table->string('avatar')->nullable()->after('password');
             $table->boolean('is_active')->default(true)->after('avatar');
             $table->timestamp('last_login_at')->nullable()->after('is_active');
@@ -36,7 +34,6 @@ return new class() extends Migration
         Schema::table('users', function (Blueprint $table): void {
             $table->dropIndex(['name']);
             $table->dropIndex(['is_active']);
-            $table->dropMorphs('profile');
             $table->dropColumn([
                 'avatar',
                 'is_active',

@@ -24,7 +24,6 @@ return new class() extends Migration
             $table->boolean('is_active')->default(true);
 
             $table->jsonb('bank_data')->nullable();
-            //
 
             $table->timestamps();
 

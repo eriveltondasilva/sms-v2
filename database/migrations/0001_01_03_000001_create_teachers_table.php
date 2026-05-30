@@ -15,6 +15,8 @@ return new class() extends Migration
         Schema::create('teachers', function (Blueprint $table): void {
             $table->id();
 
+            $table->foreignId('user_id')->nullable()->unique()->constrained()->nullOnDelete();
+
             $table->string('name');
             $table->char('gender', 1)->default(Gender::DEFAULT);
             $table->date('birth_date')->nullable();
