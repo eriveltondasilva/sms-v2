@@ -13,4 +13,15 @@ enum StudentStatus: string
     case Dropout = 'dropout';
 
     public const DEFAULT = self::Active->value;
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Active      => 'Ativo',
+            self::Inactive    => 'Inativo',
+            self::Transferred => 'Transferido',
+            self::Graduated   => 'Graduado',
+            self::Dropout     => 'Desistente',
+        };
+    }
 }

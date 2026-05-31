@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum SchoolYearStatus: string
+enum ProgressStatus: string
 {
     case Planned = 'planned';
     case InProgress = 'in_progress';

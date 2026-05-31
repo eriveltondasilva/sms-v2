@@ -12,4 +12,14 @@ enum PeriodGradeStatus: string
     case Failed = 'failed';
 
     public const DEFAULT = self::Pending->value;
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Pending       => 'Pendente',
+            self::Passing       => 'Aprovado',
+            self::NeedsRecovery => 'Recuperação',
+            self::Failed        => 'Reprovado',
+        };
+    }
 }
