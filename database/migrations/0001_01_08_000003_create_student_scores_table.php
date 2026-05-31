@@ -17,7 +17,10 @@ return new class() extends Migration
             $table->foreignId('assessment_id')->constrained()->restrictOnDelete();
             $table->foreignId('enrollment_id')->constrained()->restrictOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+
+            // #
 
             $table->decimal('score', 5, 2)->nullable();
 

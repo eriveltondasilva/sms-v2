@@ -12,19 +12,24 @@ return new class() extends Migration
     {
         Schema::create('lesson_plans', function (Blueprint $table): void {
             $table->id();
+
             $table->foreignId('teaching_assignment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('academic_period_id')->constrained()->cascadeOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+
+            // #
 
             $table->string('title');
             $table->text('content');
 
             $table->text('objectives')->nullable();
             $table->text('methodology')->nullable();
+
             $table->jsonb('bncc_codes')->nullable();
             // bncc_codes (jsonb): códigos de habilidades da Base Nacional Comum Curricular (BNCC).
-            // Estrutura sugerida:
+            // Estrutura:
             // [
             //   "EF01LP01",
             //   "EF01LP02",

@@ -16,9 +16,12 @@ return new class() extends Migration
 
             $table->foreignId('teaching_assignment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('academic_period_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('assessment_type_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+            $table->foreignId('assessment_template_id')->nullable()->constrained()->nullOnDelete();
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+
+            // #
 
             $table->string('name');
             $table->string('description')->nullable();
@@ -38,7 +41,7 @@ return new class() extends Migration
 
             $table->index(['school_id', 'academic_period_id']);
             $table->index(['academic_period_id', 'date']);
-            $table->index('assessment_type_id');
+            $table->index('assessment_template_id');
             $table->index('created_by');
         });
     }

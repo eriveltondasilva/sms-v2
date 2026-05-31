@@ -18,6 +18,8 @@ return new class() extends Migration
             $table->foreignId('teacher_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
+            // #
+
             $table->unsignedSmallInteger('workload_hours')->nullable();
 
             $table->date('start_date');

@@ -13,27 +13,27 @@ return new class() extends Migration
         Schema::create('lesson_records', function (Blueprint $table): void {
             $table->id();
 
-            $table->foreignId('teaching_assignment_id')->constrained()->restrictOnDelete();
+            $table->foreignId('lesson_id')->unique()->constrained()->restrictOnDelete();
+            // 1:1 com lessons — cada aula tem no máximo um diário.
+            // O professor pode preencher em momento independente da chamada.
+
             $table->foreignId('lesson_plan_id')->nullable()->constrained()->nullOnDelete();
+            // Opcional: vincula o diário ao plano de aula seguido.
+
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
             $table->foreignId('recorded_by')->nullable()->constrained('users')->nullOnDelete();
 
-            $table->date('lesson_date');
-            $table->time('start_time');
-
             $table->text('topic')->nullable();
+            // Assunto/conteúdo trabalhado na aula — campo livre para o professor.
+
             $table->timestamp('diary_filled_at')->nullable();
+            // Momento em que o diário foi efetivamente preenchido (pode ser posterior à aula).
 
             $table->timestamps();
 
             // #
 
-            $table->unique(
-                ['teaching_assignment_id', 'lesson_date', 'start_time'],
-                'unique_lr_ta_date_time'
-            );
-
-            $table->index(['school_id', 'lesson_date']);
+            $table->index(['school_id', 'lesson_id']);
             $table->index('lesson_plan_id');
             $table->index('recorded_by');
         });

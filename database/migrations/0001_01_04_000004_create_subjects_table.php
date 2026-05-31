@@ -15,6 +15,8 @@ return new class() extends Migration
 
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
 
+            // #
+
             $table->string('name');
             $table->string('code', 10);
             $table->unsignedSmallInteger('week_hours')->default(0);
@@ -26,6 +28,7 @@ return new class() extends Migration
             // #
 
             $table->unique(['school_id', 'code'], 'unique_code_per_school');
+
             $table->index(['school_id', 'name']);
             $table->index(['school_id', 'is_active']);
         });

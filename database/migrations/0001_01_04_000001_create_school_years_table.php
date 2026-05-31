@@ -17,7 +17,10 @@ return new class() extends Migration
     {
         Schema::create('school_years', function (Blueprint $table): void {
             $table->id();
+
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
+            // #
 
             $table->smallInteger('year')->unsigned();
             $table->string('status', 20)->default(ProgressStatus::DEFAULT);

@@ -17,6 +17,8 @@ return new class() extends Migration
             $table->foreignId('teaching_assignment_id')->constrained()->restrictOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
+            // #
+
             $table->unsignedSmallInteger('weekday');
             $table->time('start_time');
 

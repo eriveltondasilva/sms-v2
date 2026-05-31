@@ -17,11 +17,11 @@ return new class() extends Migration
 
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
-
             $table->foreignId('classroom_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
 
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+
+            // #
 
             $table->string('title');
             $table->text('description')->nullable();
@@ -44,7 +44,6 @@ return new class() extends Migration
             $table->index(['school_year_id', 'start_date']);
             $table->index(['classroom_id', 'start_date']);
             $table->index(['school_id', 'start_date']);
-            $table->index('subject_id');
             $table->index('created_by');
         });
 

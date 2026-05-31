@@ -10,10 +10,12 @@ return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::create('assessment_types', function (Blueprint $table): void {
+        Schema::create('assessment_templates', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
+
+            // #
 
             $table->string('name', 100);
             $table->string('description')->nullable();
@@ -32,6 +34,6 @@ return new class() extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('assessment_types');
+        Schema::dropIfExists('assessment_templates');
     }
 };

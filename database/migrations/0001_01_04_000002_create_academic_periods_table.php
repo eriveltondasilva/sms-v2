@@ -13,7 +13,10 @@ return new class() extends Migration
     {
         Schema::create('academic_periods', function (Blueprint $table): void {
             $table->id();
+
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
+
+            // #
 
             $table->string('name', 50);
             $table->smallInteger('order')->unsigned();

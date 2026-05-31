@@ -13,6 +13,8 @@ return new class() extends Migration
         Schema::create('grade_levels', function (Blueprint $table): void {
             $table->id();
 
+            // #
+
             $table->string('name');
             $table->string('stage', 10);
             $table->string('code', 10)->unique();

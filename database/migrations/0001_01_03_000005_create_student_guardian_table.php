@@ -17,6 +17,8 @@ return new class() extends Migration
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('guardian_id')->constrained()->cascadeOnDelete();
 
+            // #
+
             $table->string('relationship', 50);
             $table->boolean('is_primary')->default(false);
 
@@ -30,10 +32,10 @@ return new class() extends Migration
         });
 
         DB::statement('
-    CREATE UNIQUE INDEX unq_one_primary_guardian_per_student
-    ON student_guardian (student_id)
-    WHERE is_primary = true
-');
+            CREATE UNIQUE INDEX unq_one_primary_guardian_per_student
+            ON student_guardian (student_id)
+            WHERE is_primary = true
+        ');
     }
 
     public function down(): void

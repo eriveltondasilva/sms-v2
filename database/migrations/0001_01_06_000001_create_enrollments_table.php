@@ -19,15 +19,19 @@ return new class() extends Migration
             $table->foreignId('classroom_id')->constrained()->restrictOnDelete();
             $table->foreignId('school_year_id')->constrained()->restrictOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
             $table->foreignId('previous_enrollment_id')->nullable()->constrained('enrollments')->nullOnDelete();
 
+            // #
+
             $table->string('status', 20)->default(EnrollmentStatus::DEFAULT);
+            $table->text('notes')->nullable();
+
             $table->string('final_result', 20)->nullable();
             $table->timestamp('final_result_calculated_at')->nullable();
-            $table->date('enrolled_at')->nullable();
-            $table->date('finalized_at')->nullable();
-            $table->text('transfer_reason')->nullable();
-            $table->text('dropout_reason')->nullable();
+
+            $table->date('enrolled_date')->nullable();
+            $table->date('finalized_date')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

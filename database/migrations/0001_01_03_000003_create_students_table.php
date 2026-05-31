@@ -18,6 +18,8 @@ return new class() extends Migration
 
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
+            // #
+
             $table->uuid('public_id')->unique();
             $table->string('registration', 20);
 
@@ -60,8 +62,8 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(['school_id', 'registration'], 'unq_registration_per_school');
-            $table->unique(['school_id', 'cpf'], 'unq_cpf_per_school');
+            $table->unique(['school_id', 'registration'], 'unique_registration_per_school');
+            $table->unique(['school_id', 'cpf'], 'unique_cpf_per_school');
 
             $table->index('cpf');
             $table->index('registration');

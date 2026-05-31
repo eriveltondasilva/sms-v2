@@ -15,10 +15,14 @@ return new class() extends Migration
 
             $table->foreignId('school_id')->constrained()->cascadeOnDelete();
 
+            // #
+
             $table->string('name');
+
+            $table->string('cpf', 11)->nullable();
+
             $table->string('phone', 11);
             $table->string('email')->nullable();
-            $table->string('cpf', 11)->nullable();
             $table->text('address')->nullable();
 
             $table->timestamps();
@@ -27,9 +31,6 @@ return new class() extends Migration
             // #
 
             $table->unique(['school_id', 'cpf'], 'school_guardian_unique');
-
-            $table->index('cpf');
-            $table->index('school_id');
         });
     }
 
