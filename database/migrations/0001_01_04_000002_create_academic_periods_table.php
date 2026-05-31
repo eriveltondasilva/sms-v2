@@ -1,8 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\AcademicPeriodStatus;
+use App\Enums\ProgressStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +21,7 @@ return new class() extends Migration
             $table->date('start_date');
             $table->date('end_date');
 
-            $table->string('status', 20)->default(AcademicPeriodStatus::DEFAULT);
+            $table->string('status', 20)->default(ProgressStatus::DEFAULT);
 
             $table->timestamps();
 

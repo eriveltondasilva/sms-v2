@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Enums\AnnualFormulaType;
 use App\Enums\PeriodFormulaType;
+use App\Enums\ProgressStatus;
 use App\Enums\RecoveryMethod;
-use App\Enums\SchoolYearStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ return new class() extends Migration
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
             $table->smallInteger('year')->unsigned();
-            $table->string('status', 20)->default(SchoolYearStatus::DEFAULT);
+            $table->string('status', 20)->default(ProgressStatus::DEFAULT);
 
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
