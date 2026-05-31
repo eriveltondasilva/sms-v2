@@ -48,7 +48,6 @@ return new class() extends Migration
 
             $table->unique(['school_id', 'year'], 'unique_sy_year_per_school');
 
-            $table->index(['school_id', 'year']);
             $table->index(['school_id', 'status']);
         });
 

@@ -29,6 +29,15 @@ return new class() extends Migration
             $table->boolean('is_active')->default(true);
 
             $table->jsonb('social_medias')->nullable();
+            // social_medias (jsonb): links e perfis em redes sociais da escola.
+            // Estrutura sugerida:
+            // {
+            //   "website": "https://escola.com.br",
+            //   "instagram": "https://instagram.com/escola",
+            //   "facebook": "https://facebook.com/escola",
+            //   "youtube": "https://youtube.com/@escola",
+            //   "twitter": "https://twitter.com/escola"
+            // }
 
             $table->softDeletes();
             $table->timestamps();

@@ -22,7 +22,7 @@ return new class() extends Migration
             $table->date('birth_date')->nullable();
 
             $table->string('cpf', 11)->unique();
-            $table->string('rg', 9)->nullable();
+            $table->string('rg', 20)->nullable();
 
             $table->string('phone', 11)->nullable();
             $table->string('email')->nullable();
@@ -32,10 +32,6 @@ return new class() extends Migration
 
             $table->softDeletes();
             $table->timestamps();
-
-            // #
-
-            $table->index(['is_active']);
         });
 
         DB::statement("

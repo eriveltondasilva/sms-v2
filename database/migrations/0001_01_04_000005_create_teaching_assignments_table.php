@@ -35,6 +35,7 @@ return new class() extends Migration
             $table->index(['school_id', 'is_active']);
             $table->index(['classroom_id', 'subject_id', 'is_active']);
             $table->index('teacher_id');
+            $table->index('subject_id');
         });
     }
 

@@ -23,6 +23,13 @@ return new class() extends Migration
             $table->text('objectives')->nullable();
             $table->text('methodology')->nullable();
             $table->jsonb('bncc_codes')->nullable();
+            // bncc_codes (jsonb): códigos de habilidades da Base Nacional Comum Curricular (BNCC).
+            // Estrutura sugerida:
+            // [
+            //   "EF01LP01",
+            //   "EF01LP02",
+            //   "EF02MA07"
+            // ]
 
             $table->date('starts_on');
             $table->date('ends_on')->nullable();
@@ -37,7 +44,7 @@ return new class() extends Migration
             );
 
             $table->index(['school_id', 'academic_period_id']);
-            $table->index(['teaching_assignment_id', 'starts_on']);
+            $table->index('academic_period_id');
             $table->index('created_by');
         });
     }

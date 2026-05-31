@@ -24,6 +24,19 @@ return new class() extends Migration
             $table->boolean('is_active')->default(true);
 
             $table->jsonb('bank_data')->nullable();
+            // bank_data (jsonb): dados bancários do professor para pagamento de salário.
+            // Estrutura sugerida:
+            // {
+            //   "bank_code": "341",
+            //   "bank_name": "Itaú",
+            //   "agency": "1234",
+            //   "account": "12345-6",
+            //   "account_type": "corrente",
+            //   "pix_key": "12345678901",
+            //   "pix_key_type": "cpf",
+            //   "holder_name": "João Silva",
+            //   "holder_cpf": "12345678901"
+            // }
 
             $table->timestamps();
 
@@ -32,7 +45,6 @@ return new class() extends Migration
             $table->unique(['teacher_id', 'school_id']);
 
             $table->index(['school_id', 'is_active']);
-            $table->index('teacher_id');
         });
     }
 

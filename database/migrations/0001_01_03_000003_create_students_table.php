@@ -27,8 +27,10 @@ return new class() extends Migration
             $table->char('gender', 1)->default(Gender::DEFAULT);
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
+            $table->string('nationality', 50)->default('Brasileira');
+            $table->string('color_race')->nullable();
 
-            $table->string('rg', 9)->nullable();
+            $table->string('rg', 20)->nullable();
             $table->string('cpf', 11);
 
             $table->string('phone', 11)->nullable();
@@ -50,6 +52,8 @@ return new class() extends Migration
             //   "emergency_contact": "Maria Silva",
             //   "emergency_phone": "82999990000"
             // }
+
+            $table->jsonb('special_needs')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

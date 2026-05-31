@@ -33,13 +33,11 @@ return new class() extends Migration
 
             $table->unique(
                 ['teaching_assignment_id', 'academic_period_id', 'name'],
-                'unq_assessment_ta_period_name'
+                'unique_assessment_ta_period_name'
             );
 
             $table->index(['school_id', 'academic_period_id']);
             $table->index(['academic_period_id', 'date']);
-            $table->index(['teaching_assignment_id', 'academic_period_id']);
-            $table->index('teaching_assignment_id');
             $table->index('assessment_type_id');
             $table->index('created_by');
         });

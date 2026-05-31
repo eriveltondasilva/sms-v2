@@ -39,13 +39,14 @@ return new class() extends Migration
             $table->index(['student_id', 'school_year_id']);
             $table->index(['school_year_id', 'status']);
             $table->index('previous_enrollment_id');
+            $table->index('classroom_id');
         });
 
         DB::statement("
-    ALTER TABLE enrollments
-    ADD CONSTRAINT chk_enrollment_final_result
-    CHECK (final_result IN ('approved', 'failed', 'transferred', 'dropout') OR final_result IS NULL)
-");
+            ALTER TABLE enrollments
+            ADD CONSTRAINT chk_enrollment_final_result
+            CHECK (final_result IN ('approved', 'failed', 'transferred', 'dropout') OR final_result IS NULL)
+        ");
 
         DB::statement("
             CREATE UNIQUE

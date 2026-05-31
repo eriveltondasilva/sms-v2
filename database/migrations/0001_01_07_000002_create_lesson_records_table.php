@@ -30,11 +30,10 @@ return new class() extends Migration
 
             $table->unique(
                 ['teaching_assignment_id', 'lesson_date', 'start_time'],
-                'unq_lr_ta_date_time'
+                'unique_lr_ta_date_time'
             );
 
             $table->index(['school_id', 'lesson_date']);
-            $table->index(['teaching_assignment_id', 'lesson_date']);
             $table->index('lesson_plan_id');
             $table->index('recorded_by');
         });

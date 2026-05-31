@@ -16,8 +16,11 @@ return new class() extends Migration
             $table->id();
 
             $table->foreignId('school_year_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
             $table->foreignId('classroom_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
+
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
 
             $table->string('title');
@@ -40,15 +43,16 @@ return new class() extends Migration
             $table->index(['school_year_id', 'type', 'start_date']);
             $table->index(['school_year_id', 'start_date']);
             $table->index(['classroom_id', 'start_date']);
+            $table->index(['school_id', 'start_date']);
             $table->index('subject_id');
             $table->index('created_by');
         });
 
         DB::statement("
-    ALTER TABLE school_events
-    ADD CONSTRAINT chk_event_type
-    CHECK (type IN ('holiday', 'recess', 'exam', 'meeting', 'activity', 'other'))
-");
+            ALTER TABLE school_events
+            ADD CONSTRAINT chk_event_type
+            CHECK (type IN ('general', 'holiday', 'exam', 'meeting', 'recess'))
+        ");
 
         DB::statement('
             ALTER TABLE school_events
