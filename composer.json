@@ -18,6 +18,7 @@
         "spatie/laravel-permission": "^7.4"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.7",
         "driftingly/rector-laravel": "^2.3",
         "fakerphp/faker": "^1.24",
         "fruitcake/laravel-debugbar": "^4.2",
@@ -51,7 +52,8 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan boost:update --ansi"
+            "@php artisan boost:update --ansi",
+            "@php artisan ide-helper:generate"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -76,6 +78,7 @@
             "Composer\\Config::disableProcessTimeout",
             "bunx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"bun run dev\" --names='server,queue,vite'"
         ],
+        "0xxx": "",
         "tests": [
             "@php artisan config:clear --ansi",
             "@lint",
@@ -97,6 +100,10 @@
             "@pint:ci",
             "@rector",
             "@types"
+        ],
+        "docs": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models --nowrite"
         ],
         "3xxx": "",
         "test:unit": "pest --testsuite Unit",

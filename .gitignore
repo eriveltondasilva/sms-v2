@@ -30,3 +30,5 @@ yarn-error.log
 /.zed
 /.agents
 /tmp
+_ide_helper.php
+_ide_helper_models.php

@@ -6,7 +6,9 @@
         "public/build",
         "storage",
         "tmp",
-        "vendor"
+        "vendor",
+        "/_ide_helper.php",
+        "/_ide_helper_models.php"
     ],
     "rules": {
         "declare_strict_types": true,
