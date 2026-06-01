@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Context;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
 
@@ -28,7 +25,7 @@ class UserSeeder extends Seeder
             $user->assignRole($role->value);
 
             if (! $role->isGlobal()) {
-                $user->schools()->attach($school->id, ['is_revoked' => false]);
+                $user->schools()->attach($school->id, ['is_active' => true]);
             }
         }
     }
