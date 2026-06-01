@@ -16,15 +16,10 @@ return new class() extends Migration
             // #
 
             $table->string('name');
-            $table->string('stage', 10);
+            $table->string('stage');
             $table->string('code', 10)->unique();
-            $table->smallInteger('order')->unsigned();
 
             $table->timestamps();
-
-            // #
-
-            $table->index('order');
         });
     }
 
