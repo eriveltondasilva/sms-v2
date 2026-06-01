@@ -37,7 +37,7 @@ return new class() extends Migration
 
         DB::statement('
             ALTER TABLE student_scores
-            ADD CONSTRAINT chk_score_range
+            ADD CONSTRAINT check_score_range
             CHECK (score IS NULL OR score >= 0)
         ');
     }

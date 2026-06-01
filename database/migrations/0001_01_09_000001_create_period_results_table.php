@@ -62,7 +62,7 @@ return new class() extends Migration
 
             $table->unique(
                 ['enrollment_id', 'teaching_assignment_id', 'academic_period_id'],
-                'unq_period_result'
+                'unique_period_result'
             );
 
             $table->index(['school_id', 'academic_period_id']);
@@ -74,37 +74,37 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_grade_status
+            ADD CONSTRAINT check_pr_grade_status
             CHECK (grade_status IN ('pending','passing','needs_recovery','failed'))
         ");
 
         DB::statement("
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_attendance_status
+            ADD CONSTRAINT check_pr_attendance_status
             CHECK (attendance_status IN ('sufficient','insufficient'))
         ");
 
         DB::statement('
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_calculated_grade
+            ADD CONSTRAINT check_pr_calculated_grade
             CHECK (calculated_grade >= 0)
         ');
 
         DB::statement('
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_recovery_grade
+            ADD CONSTRAINT check_pr_recovery_grade
             CHECK (recovery_grade IS NULL OR recovery_grade >= 0)
         ');
 
         DB::statement('
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_final_grade
+            ADD CONSTRAINT check_pr_final_grade
             CHECK (final_grade >= 0)
         ');
 
         DB::statement('
             ALTER TABLE period_results
-            ADD CONSTRAINT chk_pr_attendance_pct
+            ADD CONSTRAINT check_pr_attendance_pct
             CHECK (attendance_percentage BETWEEN 0 AND 100)
         ');
     }

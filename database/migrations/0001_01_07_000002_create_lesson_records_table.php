@@ -33,7 +33,6 @@ return new class() extends Migration
 
             // #
 
-            $table->index(['school_id', 'lesson_id']);
             $table->index('lesson_plan_id');
             $table->index('recorded_by');
         });

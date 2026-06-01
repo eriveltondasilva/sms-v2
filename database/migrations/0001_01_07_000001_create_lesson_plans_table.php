@@ -43,10 +43,7 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(
-                ['teaching_assignment_id', 'starts_on'],
-                'unq_lp_ta_starts_on'
-            );
+            $table->unique(['teaching_assignment_id', 'starts_on'], 'unique_lp_ta_starts_on');
 
             $table->index(['school_id', 'academic_period_id']);
             $table->index('academic_period_id');

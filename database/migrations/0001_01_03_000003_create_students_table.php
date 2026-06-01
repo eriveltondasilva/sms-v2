@@ -33,7 +33,7 @@ return new class() extends Migration
             $table->string('color_race')->nullable();
 
             $table->string('rg', 20)->nullable();
-            $table->string('cpf', 11);
+            $table->string('cpf', 11)->nullable();
 
             $table->string('phone', 11)->nullable();
             $table->string('email')->nullable();
@@ -65,7 +65,6 @@ return new class() extends Migration
             $table->unique(['school_id', 'registration'], 'unique_registration_per_school');
             $table->unique(['school_id', 'cpf'], 'unique_cpf_per_school');
 
-            $table->index('cpf');
             $table->index('registration');
             $table->index(['school_id', 'full_name']);
             $table->index(['school_id', 'status']);

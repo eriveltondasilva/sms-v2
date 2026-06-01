@@ -31,7 +31,7 @@ return new class() extends Migration
 
             $table->unique(
                 ['teaching_assignment_id', 'weekday', 'start_time', 'valid_from'],
-                'unq_cs_ta_weekday_time_from'
+                'unique_cs_ta_weekday_time_from'
             );
 
             $table->index(['school_id', 'weekday']);
@@ -40,13 +40,13 @@ return new class() extends Migration
 
         DB::statement('
             ALTER TABLE class_schedules
-            ADD CONSTRAINT chk_cs_weekday
+            ADD CONSTRAINT check_cs_weekday
             CHECK (weekday BETWEEN 1 AND 6)
         ');
 
         DB::statement('
             ALTER TABLE class_schedules
-            ADD CONSTRAINT chk_cs_valid_dates
+            ADD CONSTRAINT check_cs_valid_dates
             CHECK (valid_until IS NULL OR valid_until > valid_from)
         ');
     }

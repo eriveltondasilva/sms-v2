@@ -49,13 +49,13 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE school_events
-            ADD CONSTRAINT chk_event_type
+            ADD CONSTRAINT check_event_type
             CHECK (type IN ('general', 'holiday', 'exam', 'meeting', 'recess'))
         ");
 
         DB::statement('
             ALTER TABLE school_events
-            ADD CONSTRAINT chk_event_dates
+            ADD CONSTRAINT check_event_dates
             CHECK (end_date IS NULL OR end_date >= start_date)
         ');
     }

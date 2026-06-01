@@ -12,7 +12,7 @@ return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::create('lesson', function (Blueprint $table): void {
+        Schema::create('lessons', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignId('class_schedule_id')->nullable()->constrained()->restrictOnDelete();
@@ -50,12 +50,13 @@ return new class() extends Migration
             $table->index(['school_id', 'lesson_date']);
             $table->index(['school_id', 'status']);
             $table->index(['teaching_assignment_id', 'status']);
+            $table->index('class_schedule_id');
             $table->index('cancelled_by');
         });
 
         DB::statement("
-            ALTER TABLE class_occurrences
-            ADD CONSTRAINT chk_co_status
+            ALTER TABLE lessons
+            ADD CONSTRAINT check_co_status
             CHECK (status IN ('scheduled','held','cancelled','makeup'))
         ");
     }

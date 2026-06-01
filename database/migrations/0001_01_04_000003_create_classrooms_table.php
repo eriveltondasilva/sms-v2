@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -23,7 +24,7 @@ return new class() extends Migration
 
             $table->string('name', 50);
             $table->string('room', 30)->nullable();
-            $table->string('shift', 20)->nullable();
+            $table->string('shift', 20);
 
             $table->unsignedSmallInteger('student_max')->default(30);
 
@@ -36,7 +37,7 @@ return new class() extends Migration
 
             $table->unique(
                 ['school_year_id', 'grade_level_id', 'name'],
-                'unq_classrooms_sy_ogl_name'
+                'unique_classrooms_sy_ogl_name'
             );
 
             $table->index(['school_id', 'is_active']);
@@ -45,6 +46,12 @@ return new class() extends Migration
             $table->index(['grade_level_id', 'is_active']);
             $table->index('main_teacher_id');
         });
+
+        DB::statement("
+            ALTER TABLE classrooms
+            ADD CONSTRAINT chk_classroom_shift
+            CHECK (shift IN ('morning','afternoon','evening'))
+        ");
     }
 
     public function down(): void

@@ -39,7 +39,7 @@ return new class() extends Migration
 
             $table->unique(
                 ['enrollment_id', 'lesson_id'],
-                'unq_attendance_enrollment_occurrence'
+                'unique_attendance_enrollment_occurrence'
             );
 
             $table->index(['lesson_id', 'status']);
@@ -59,7 +59,7 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE attendances
-            ADD CONSTRAINT chk_attendance_status
+            ADD CONSTRAINT check_attendance_status
             CHECK (status IN ('P','A','J'))
         ");
     }

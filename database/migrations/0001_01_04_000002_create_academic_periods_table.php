@@ -30,7 +30,7 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(['school_year_id', 'order'], 'unq_period_order_per_sy');
+            $table->unique(['school_year_id', 'order'], 'unique_period_order_per_sy');
 
             $table->index(['school_year_id', 'start_date', 'end_date']);
             $table->index(['school_year_id', 'status']);
@@ -38,19 +38,19 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE academic_periods
-            ADD CONSTRAINT chk_ap_status
+            ADD CONSTRAINT check_ap_status
             CHECK (status IN ('planned','in_progress','finished'))
         ");
 
         DB::statement('
             ALTER TABLE academic_periods
-            ADD CONSTRAINT chk_ap_order
+            ADD CONSTRAINT check_ap_order
             CHECK ("order" BETWEEN 1 AND 6)
         ');
 
         DB::statement('
             ALTER TABLE academic_periods
-            ADD CONSTRAINT chk_ap_dates
+            ADD CONSTRAINT check_ap_dates
             CHECK (end_date > start_date)
         ');
     }

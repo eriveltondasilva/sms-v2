@@ -62,8 +62,14 @@ return new class() extends Migration
 
         DB::statement('
             ALTER TABLE school_years
-            ADD CONSTRAINT chk_sy_attendance_pct
+            ADD CONSTRAINT check_sy_attendance_pct
             CHECK (min_attendance_percentage BETWEEN 0 AND 100)
+        ');
+
+        DB::statement('
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_min_school_days
+            CHECK (total_school_days >= 200)
         ');
 
         DB::statement("

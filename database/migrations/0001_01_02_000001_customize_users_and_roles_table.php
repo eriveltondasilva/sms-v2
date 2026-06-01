@@ -15,11 +15,6 @@ return new class() extends Migration
             $table->boolean('is_active')->default(true)->after('avatar');
             $table->timestamp('last_login_at')->nullable()->after('is_active');
             $table->softDeletes()->after('last_login_at');
-
-            // #
-
-            $table->index('name');
-            $table->index('is_active');
         });
 
         Schema::table('roles', function (Blueprint $table): void {
