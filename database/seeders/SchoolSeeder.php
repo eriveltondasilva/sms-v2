@@ -23,8 +23,8 @@ class SchoolSeeder extends Seeder
                 'cnpj'      => $this->digitsOnly('00.000.000/0001-00'),
                 'phone'     => $this->digitsOnly('(82) 9 8765-4321'),
 
-                'email'     => 'contato@escola-demo.com',
-                'address'   => 'Av. Brasil, 123, Bairro, Cidade - Estado',
+                'email'   => 'contato@escola-demo.com',
+                'address' => 'Av. Brasil, 123, Bairro, Cidade - Estado',
 
                 'is_active' => true,
             ],
@@ -33,7 +33,7 @@ class SchoolSeeder extends Seeder
         Context::add('school-demo', $school);
     }
 
-      private function digitsOnly(string $value): string
+    private function digitsOnly(string $value): string
     {
         return preg_replace('/\D/', '', $value);
     }
