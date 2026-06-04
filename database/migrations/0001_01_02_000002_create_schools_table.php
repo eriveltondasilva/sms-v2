@@ -17,9 +17,9 @@ return new class() extends Migration
 
             $table->string('full_name');
             $table->string('short_name', 50);
-            $table->string('slug', 100)->unique();
-
             $table->string('motto')->nullable();
+
+            $table->string('slug', 100)->unique();
 
             $table->string('cnpj', 14)->unique();
             $table->string('inep_code', 8)->nullable()->unique();

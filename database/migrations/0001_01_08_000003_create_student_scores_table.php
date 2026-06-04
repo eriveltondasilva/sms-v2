@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -34,12 +33,6 @@ return new class() extends Migration
             $table->index(['school_id', 'enrollment_id']);
             $table->index('created_by');
         });
-
-        DB::statement('
-            ALTER TABLE student_scores
-            ADD CONSTRAINT check_score_range
-            CHECK (score IS NULL OR score >= 0)
-        ');
     }
 
     public function down(): void

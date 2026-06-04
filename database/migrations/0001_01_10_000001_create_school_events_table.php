@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\SchoolEventType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +30,8 @@ return new class() extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
 
-            $table->string('type', 20)->default(SchoolEventType::DEFAULT);
+            $table->string('type', 20);
             $table->boolean('blocks_lessons')->default(true);
-            $table->boolean('affects_attendance')->default(true);
 
             $table->timestamps();
 

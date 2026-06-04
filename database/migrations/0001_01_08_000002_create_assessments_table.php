@@ -1,11 +1,8 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\AssessmentCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -26,9 +23,11 @@ return new class() extends Migration
 
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('category', 20)->default(AssessmentCategory::DEFAULT);
-            $table->decimal('max_score', 5, 2)->default(10.00);
-            $table->decimal('weight', 5, 2)->default(1.00);
+
+            $table->decimal('max_score', 5, 2);
+            $table->decimal('weight', 5, 2);
+
+            $table->string('category', 20);
             $table->date('date')->nullable();
 
             $table->timestamps();
@@ -45,12 +44,6 @@ return new class() extends Migration
             $table->index('assessment_template_id');
             $table->index('created_by');
         });
-
-        DB::statement('
-            ALTER TABLE assessments
-            ADD CONSTRAINT chk_assessment_scores
-            CHECK (max_score > 0 AND weight > 0)
-        ');
     }
 
     public function down(): void

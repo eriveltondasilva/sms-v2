@@ -26,7 +26,7 @@ return new class() extends Migration
             $table->string('room', 30)->nullable();
             $table->string('shift', 20);
 
-            $table->unsignedSmallInteger('student_max')->default(30);
+            $table->unsignedSmallInteger('student_max');
 
             $table->boolean('is_active')->default(true);
 

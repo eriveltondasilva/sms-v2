@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Enums\Gender;
-use App\Enums\StudentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +38,7 @@ return new class() extends Migration
             $table->string('email')->nullable();
             $table->text('address')->nullable();
 
-            $table->string('status', 50)->default(StudentStatus::DEFAULT);
+            $table->string('status', 50);
             $table->text('status_notes')->nullable();
 
             $table->jsonb('health_data')->nullable();

@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\AttendanceStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +27,9 @@ return new class() extends Migration
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
             $table->foreignId('recorded_by')->nullable()->constrained('users')->nullOnDelete();
 
-            $table->string('status', 1)->default(AttendanceStatus::DEFAULT);
+            // #
+
+            $table->string('status', 1);
             // 'P' = Presente | 'A' = Ausente | 'J' = Falta Justificada
             $table->text('justification')->nullable();
 

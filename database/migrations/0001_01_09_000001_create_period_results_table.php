@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\PeriodAttendanceStatus;
-use App\Enums\PeriodGradeStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +19,13 @@ return new class() extends Migration
             $table->foreignId('academic_period_id')->constrained()->restrictOnDelete();
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
-            // --- Grade ---
+            // --- GRADE ---
 
             $table->decimal('calculated_grade', 5, 2);
             $table->decimal('recovery_grade', 5, 2)->nullable();
             $table->decimal('final_grade', 5, 2);
 
-            $table->string('grade_status', 20)->default(PeriodGradeStatus::Pending->value);
-            $table->boolean('grade_is_locked')->default(false);
+            $table->string('grade_status', 20);
             $table->timestamp('grade_locked_at')->nullable();
 
             $table->jsonb('calculation_snapshot')->nullable();
@@ -44,16 +41,17 @@ return new class() extends Migration
             //   "calculated_at": "2025-05-20T10:00:00Z"
             // }
 
-            // --- Attendance ---
+            // --- ATTENDANCE ---
 
             $table->unsignedSmallInteger('total_classes')->default(0);
+
             $table->unsignedSmallInteger('attended_classes')->default(0);
             $table->unsignedSmallInteger('justified_absences')->default(0);
             $table->unsignedSmallInteger('unjustified_absences')->default(0);
+
             $table->decimal('attendance_percentage', 5, 2)->default(0.00);
 
-            $table->string('attendance_status', 20)->default(PeriodAttendanceStatus::Sufficient->value);
-            $table->boolean('attendance_is_locked')->default(false);
+            $table->string('attendance_status', 20);
             $table->timestamp('attendance_locked_at')->nullable();
 
             $table->timestamps();
@@ -83,30 +81,6 @@ return new class() extends Migration
             ADD CONSTRAINT check_pr_attendance_status
             CHECK (attendance_status IN ('sufficient','insufficient'))
         ");
-
-        DB::statement('
-            ALTER TABLE period_results
-            ADD CONSTRAINT check_pr_calculated_grade
-            CHECK (calculated_grade >= 0)
-        ');
-
-        DB::statement('
-            ALTER TABLE period_results
-            ADD CONSTRAINT check_pr_recovery_grade
-            CHECK (recovery_grade IS NULL OR recovery_grade >= 0)
-        ');
-
-        DB::statement('
-            ALTER TABLE period_results
-            ADD CONSTRAINT check_pr_final_grade
-            CHECK (final_grade >= 0)
-        ');
-
-        DB::statement('
-            ALTER TABLE period_results
-            ADD CONSTRAINT check_pr_attendance_pct
-            CHECK (attendance_percentage BETWEEN 0 AND 100)
-        ');
     }
 
     public function down(): void

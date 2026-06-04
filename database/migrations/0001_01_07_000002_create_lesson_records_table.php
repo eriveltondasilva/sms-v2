@@ -23,6 +23,8 @@ return new class() extends Migration
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
             $table->foreignId('recorded_by')->nullable()->constrained('users')->nullOnDelete();
 
+            // #
+
             $table->text('topic')->nullable();
             // Assunto/conteúdo trabalhado na aula — campo livre para o professor.
 

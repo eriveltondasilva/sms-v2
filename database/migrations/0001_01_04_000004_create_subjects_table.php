@@ -19,7 +19,7 @@ return new class() extends Migration
 
             $table->string('name');
             $table->string('code', 10);
-            $table->unsignedSmallInteger('week_hours')->default(0);
+            $table->unsignedSmallInteger('week_hours');
             $table->boolean('is_active')->default(true);
 
             $table->softDeletes();

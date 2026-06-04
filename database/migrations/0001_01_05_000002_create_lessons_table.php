@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\LessonStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +32,7 @@ return new class() extends Migration
             // Denormalizado de class_schedules.start_time para ocorrências regulares.
             // Obrigatório (preenchido manualmente) para aulas de reposição.
 
-            $table->string('status', 20)->default(LessonStatus::DEFAULT);
+            $table->string('status', 20);
             // scheduled → aula prevista, ainda não ocorreu.
             // held      → aula realizada.
             // cancelled → aula cancelada.

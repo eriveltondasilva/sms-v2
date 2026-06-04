@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\EnrollmentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +22,7 @@ return new class() extends Migration
 
             // #
 
-            $table->string('status', 20)->default(EnrollmentStatus::DEFAULT);
+            $table->string('status', 20);
             $table->text('notes')->nullable();
 
             $table->string('final_result', 20)->nullable();

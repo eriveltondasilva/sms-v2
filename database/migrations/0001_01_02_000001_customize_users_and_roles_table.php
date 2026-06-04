@@ -14,6 +14,7 @@ return new class() extends Migration
             $table->string('avatar')->nullable()->after('password');
             $table->boolean('is_active')->default(true)->after('avatar');
             $table->timestamp('last_login_at')->nullable()->after('is_active');
+
             $table->softDeletes()->after('last_login_at');
         });
 
@@ -27,8 +28,6 @@ return new class() extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table): void {
-            $table->dropIndex(['name']);
-            $table->dropIndex(['is_active']);
             $table->dropColumn([
                 'avatar',
                 'is_active',

@@ -1,11 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\AnnualFormulaType;
-use App\Enums\PeriodFormulaType;
-use App\Enums\ProgressStatus;
-use App\Enums\RecoveryMethod;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +18,7 @@ return new class() extends Migration
             // #
 
             $table->smallInteger('year')->unsigned();
-            $table->string('status', 20)->default(ProgressStatus::DEFAULT);
+            $table->string('status', 20);
 
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
@@ -31,16 +26,16 @@ return new class() extends Migration
             $table->unsignedSmallInteger('total_school_days')->default(200);
             $table->unsignedSmallInteger('total_school_hours')->default(800);
 
-            $table->string('period_formula_type', 20)->default(PeriodFormulaType::DEFAULT);
-            $table->string('annual_formula_type', 20)->default(AnnualFormulaType::DEFAULT);
-            $table->string('period_recovery_method', 20)->default(RecoveryMethod::DEFAULT);
-            $table->string('annual_recovery_method', 20)->default(RecoveryMethod::Average->value);
+            $table->string('period_formula_type', 20);
+            $table->string('annual_formula_type', 20);
+            $table->string('period_recovery_method', 20);
+            $table->string('annual_recovery_method', 20);
 
             // SEM default — preenchimento obrigatório: valor depende da fórmula anual
             // sum → 24.00 | simple_avg → 6.00
             $table->decimal('min_passing_score', 5, 2);
-            $table->decimal('min_period_score', 4, 2)->default(6.00);
-            $table->decimal('min_attendance_percentage', 5, 2)->default(75.00);
+            $table->decimal('min_period_score', 4, 2);
+            $table->decimal('min_attendance_percentage', 5, 2);
 
             $table->boolean('allows_final_exam')->default(true);
 
@@ -59,18 +54,6 @@ return new class() extends Migration
             ADD CONSTRAINT check_school_year_status
             CHECK (status IN ('planned','in_progress','finished'))
         ");
-
-        DB::statement('
-            ALTER TABLE school_years
-            ADD CONSTRAINT check_sy_attendance_pct
-            CHECK (min_attendance_percentage BETWEEN 0 AND 100)
-        ');
-
-        DB::statement('
-            ALTER TABLE school_years
-            ADD CONSTRAINT check_sy_min_school_days
-            CHECK (total_school_days >= 200)
-        ');
 
         DB::statement("
             CREATE UNIQUE INDEX unique_sy_in_progress
