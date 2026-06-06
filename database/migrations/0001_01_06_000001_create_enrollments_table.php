@@ -46,6 +46,12 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE enrollments
+            ADD CONSTRAINT check_enrollment_status
+            CHECK (status IN ('active', 'transferred', 'finished', 'dropout'))
+        ");
+
+        DB::statement("
+            ALTER TABLE enrollments
             ADD CONSTRAINT check_enrollment_final_result
             CHECK (final_result IN ('approved', 'failed', 'transferred', 'dropout') OR final_result IS NULL)
         ");

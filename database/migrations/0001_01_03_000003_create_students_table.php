@@ -38,7 +38,7 @@ return new class() extends Migration
             $table->string('email')->nullable();
             $table->text('address')->nullable();
 
-            $table->string('status', 50);
+            $table->string('status', 20);
             $table->text('status_notes')->nullable();
 
             $table->jsonb('health_data')->nullable();
@@ -73,6 +73,12 @@ return new class() extends Migration
             ALTER TABLE students
             ADD CONSTRAINT check_students_gender
             CHECK (gender IN ('M','F','N'))
+        ");
+
+        DB::statement("
+            ALTER TABLE students
+            ADD CONSTRAINT check_students_status
+            CHECK (status IN ('active','inactive','transferred','graduated','dropout'))
         ");
     }
 

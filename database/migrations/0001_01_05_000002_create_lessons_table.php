@@ -54,13 +54,13 @@ return new class() extends Migration
 
         DB::statement("
             ALTER TABLE lessons
-            ADD CONSTRAINT check_co_status
+            ADD CONSTRAINT check_lessons_status
             CHECK (status IN ('scheduled','held','cancelled','makeup'))
         ");
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('lesson');
+        Schema::dropIfExists('lessons');
     }
 };

@@ -20,8 +20,8 @@ return new class() extends Migration
             $table->smallInteger('year')->unsigned();
             $table->string('status', 20);
 
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table->unsignedSmallInteger('total_school_days')->default(200);
             $table->unsignedSmallInteger('total_school_hours')->default(800);
@@ -59,6 +59,12 @@ return new class() extends Migration
             CREATE UNIQUE INDEX unique_sy_in_progress
             ON school_years (school_id)
             WHERE status = 'in_progress'
+        ");
+
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_dates
+            CHECK (end_date > start_date)
         ");
     }
 
