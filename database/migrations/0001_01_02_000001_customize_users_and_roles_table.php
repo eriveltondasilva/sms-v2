@@ -17,12 +17,6 @@ return new class() extends Migration
 
             $table->softDeletes()->after('last_login_at');
         });
-
-        Schema::table('roles', function (Blueprint $table): void {
-            $table->string('label')->nullable()->after('name');
-            $table->string('description')->nullable()->after('label');
-            $table->string('color')->nullable()->after('description');
-        });
     }
 
     public function down(): void
@@ -34,10 +28,6 @@ return new class() extends Migration
                 'last_login_at',
             ]);
             $table->dropSoftDeletes();
-        });
-
-        Schema::table('roles', function (Blueprint $table): void {
-            $table->dropColumn(['label', 'description', 'color']);
         });
     }
 };
