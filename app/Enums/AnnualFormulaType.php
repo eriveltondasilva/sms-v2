@@ -9,6 +9,4 @@ enum AnnualFormulaType: string
     case Sum = 'sum';
     case SimpleAvg = 'simple_avg';
     case WeightedAvg = 'weighted_avg';
-
-    public const DEFAULT = self::Sum->value;
 }

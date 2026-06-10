@@ -10,6 +10,4 @@ enum AssessmentCategory: string
     case Makeup = 'makeup';
     case PeriodRecovery = 'period_recovery';
     case FinalExam = 'final_exam';
-
-    public const DEFAULT = self::Regular->value;
 }

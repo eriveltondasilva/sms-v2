@@ -10,8 +10,6 @@ enum Gender: string
     case Female = 'F';
     case NotStated = 'N';
 
-    public const DEFAULT = self::NotStated->value;
-
     public function label(): string
     {
         return match ($this) {

@@ -10,8 +10,6 @@ enum AttendanceStatus: string
     case Absent = 'A';
     case Justified = 'J';
 
-    public const DEFAULT = self::Present->value;
-
     public function label(): string
     {
         return match ($this) {

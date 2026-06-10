@@ -10,6 +10,4 @@ enum EnrollmentStatus: string
     case Transferred = 'transferred';
     case Finished = 'finished';
     case Dropout = 'dropout';
-
-    public const DEFAULT = self::Active->value;
 }

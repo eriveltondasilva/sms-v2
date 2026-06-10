@@ -8,6 +8,4 @@ enum PeriodAttendanceStatus: string
 {
     case Sufficient = 'sufficient';
     case Insufficient = 'insufficient';
-
-    public const DEFAULT = self::Sufficient->value;
 }

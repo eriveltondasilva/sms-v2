@@ -10,6 +10,4 @@ enum SubjectFinalResult: string
     case FailedByGrade = 'failed_by_grade';
     case FailedByAttendance = 'failed_by_attendance';
     case FailedBoth = 'failed_both';
-
-    public const DEFAULT = self::Approved->value;
 }

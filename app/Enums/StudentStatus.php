@@ -12,8 +12,6 @@ enum StudentStatus: string
     case Graduated = 'graduated';
     case Dropout = 'dropout';
 
-    public const DEFAULT = self::Active->value;
-
     public function label(): string
     {
         return match ($this) {

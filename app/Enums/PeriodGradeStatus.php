@@ -11,8 +11,6 @@ enum PeriodGradeStatus: string
     case NeedsRecovery = 'needs_recovery';
     case Failed = 'failed';
 
-    public const DEFAULT = self::Pending->value;
-
     public function label(): string
     {
         return match ($this) {

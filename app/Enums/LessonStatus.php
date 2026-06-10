@@ -10,6 +10,4 @@ enum LessonStatus: string
     case Held = 'held';
     case Cancelled = 'cancelled';
     case Makeup = 'makeup';
-
-    public const DEFAULT = self::Scheduled->value;
 }

@@ -12,8 +12,6 @@ enum SchoolEventType: string
     case Meeting = 'meeting';
     case Recess = 'recess';
 
-    public const DEFAULT = self::General->value;
-
     public function label(): string
     {
         return match ($this) {
