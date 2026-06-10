@@ -13,74 +13,23 @@ class GradeLevelSeeder extends Seeder
     {
         $now = now();
 
-        $gradeLevels = [
-            // Ensino Fundamental I (Anos Iniciais)
-            [
-                'name'       => '1º Ano',
-                'stage'      => 'Ensino Fundamental I',
-                'code'       => 'EF01',
+        $gradeLevels = collect([
+            ['name' => '1º Ano', 'stage' => 'Ensino Fundamental I',  'code' => 'EF01'],
+            ['name' => '2º Ano', 'stage' => 'Ensino Fundamental I',  'code' => 'EF02'],
+            ['name' => '3º Ano', 'stage' => 'Ensino Fundamental I',  'code' => 'EF03'],
+            ['name' => '4º Ano', 'stage' => 'Ensino Fundamental I',  'code' => 'EF04'],
+            ['name' => '5º Ano', 'stage' => 'Ensino Fundamental I',  'code' => 'EF05'],
+            ['name' => '6º Ano', 'stage' => 'Ensino Fundamental II', 'code' => 'EF06'],
+            ['name' => '7º Ano', 'stage' => 'Ensino Fundamental II', 'code' => 'EF07'],
+            ['name' => '8º Ano', 'stage' => 'Ensino Fundamental II', 'code' => 'EF08'],
+            ['name' => '9º Ano', 'stage' => 'Ensino Fundamental II', 'code' => 'EF09'],
+        ])
+            ->map(fn (array $level): array => [
+                ...$level,
                 'created_at' => $now,
                 'updated_at' => $now,
-            ],
-            [
-                'name'       => '2º Ano',
-                'stage'      => 'Ensino Fundamental I',
-                'code'       => 'EF02',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '3º Ano',
-                'stage'      => 'Ensino Fundamental I',
-                'code'       => 'EF03',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '4º Ano',
-                'stage'      => 'Ensino Fundamental I',
-                'code'       => 'EF04',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '5º Ano',
-                'stage'      => 'Ensino Fundamental I',
-                'code'       => 'EF05',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-
-            // Ensino Fundamental II (Anos Finais)
-            [
-                'name'       => '6º Ano',
-                'stage'      => 'Ensino Fundamental II',
-                'code'       => 'EF06',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '7º Ano',
-                'stage'      => 'Ensino Fundamental II',
-                'code'       => 'EF07',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '8º Ano',
-                'stage'      => 'Ensino Fundamental II',
-                'code'       => 'EF08',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'name'       => '9º Ano',
-                'stage'      => 'Ensino Fundamental II',
-                'code'       => 'EF09',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-        ];
+            ])
+            ->all();
 
         DB::table('grade_levels')->upsert(
             $gradeLevels,
