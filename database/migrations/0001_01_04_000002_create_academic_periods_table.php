@@ -18,7 +18,8 @@ return new class() extends Migration
             // #
 
             $table->string('name', 50);
-            $table->smallInteger('order')->unsigned();
+            $table->unsignedTinyInteger('order');
+            $table->decimal('weight', 5, 2)->nullable();
 
             $table->date('start_date');
             $table->date('end_date');

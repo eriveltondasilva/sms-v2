@@ -8,6 +8,7 @@ use App\Enums\AnnualFormulaType;
 use App\Enums\PeriodFormulaType;
 use App\Enums\ProgressStatus;
 use App\Enums\RecoveryMethod;
+use App\Enums\RoundingMode;
 use Database\Factories\SchoolYearFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read AnnualFormulaType $annual_formula_type
  * @property-read RecoveryMethod $period_recovery_method
  * @property-read RecoveryMethod $annual_recovery_method
+ * @property-read RoundingMode $rounding_mode
  */
 class SchoolYear extends Model
 {
@@ -34,14 +36,14 @@ class SchoolYear extends Model
     protected function casts(): array
     {
         return [
-            'year'               => 'integer',
-            'total_school_days'  => 'integer',
-            'total_school_hours' => 'integer',
 
             'status' => ProgressStatus::class,
 
-            'period_formula_type'    => PeriodFormulaType::class,
-            'annual_formula_type'    => AnnualFormulaType::class,
+            'rounding_mode' => RoundingMode::class,
+
+            'period_formula_type' => PeriodFormulaType::class,
+            'annual_formula_type' => AnnualFormulaType::class,
+
             'period_recovery_method' => RecoveryMethod::class,
             'annual_recovery_method' => RecoveryMethod::class,
 
@@ -53,6 +55,13 @@ class SchoolYear extends Model
             'min_attendance_percentage' => 'decimal:2',
 
             'allows_final_exam' => 'boolean',
+
+            'year'               => 'integer',
+
+            'total_school_days'  => 'integer',
+            'total_school_hours' => 'integer',
+
+            'grade_decimal_places' => 'integer',
         ];
     }
 
@@ -102,5 +111,20 @@ class SchoolYear extends Model
     public function isActive(): bool
     {
         return $this->status === ProgressStatus::InProgress;
+    }
+
+    public function isPlanned(): bool
+    {
+        return $this->status === ProgressStatus::Planned;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status === ProgressStatus::Finished;
+    }
+
+    public function requiresPeriodWeights(): bool
+    {
+        return $this->annual_formula_type === AnnualFormulaType::WeightedAvg;
     }
 }

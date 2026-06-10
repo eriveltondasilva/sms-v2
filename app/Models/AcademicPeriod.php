@@ -16,8 +16,8 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property-read ProgressStatus $status
- * @property-read Carbon $start_date
- * @property-read Carbon $end_date
+ * @property-read Carbon         $start_date
+ * @property-read Carbon         $end_date
  */
 class AcademicPeriod extends Model
 {
@@ -31,6 +31,10 @@ class AcademicPeriod extends Model
 
             'start_date' => 'date',
             'end_date'   => 'date',
+
+            'weight' => 'decimal:2',
+
+            'order' => 'integer',
         ];
     }
 
@@ -82,8 +86,23 @@ class AcademicPeriod extends Model
         return $this->status === ProgressStatus::InProgress;
     }
 
+    public function isPlanned(): bool
+    {
+        return $this->status === ProgressStatus::Planned;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status === ProgressStatus::Finished;
+    }
+
     public function containsDate(Carbon $date): bool
     {
         return $date->between($this->start_date, $this->end_date);
+    }
+
+    public function effectiveWeight(): float
+    {
+        return (float) ($this->weight ?? 1.0);
     }
 }

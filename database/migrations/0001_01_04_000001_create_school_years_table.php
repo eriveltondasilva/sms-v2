@@ -23,18 +23,22 @@ return new class() extends Migration
             $table->date('start_date');
             $table->date('end_date');
 
+            $table->unsignedTinyInteger('grade_decimal_places');
+
             $table->unsignedSmallInteger('total_school_days')->default(200);
             $table->unsignedSmallInteger('total_school_hours')->default(800);
 
             $table->string('period_formula_type', 20);
             $table->string('annual_formula_type', 20);
+
             $table->string('period_recovery_method', 20);
             $table->string('annual_recovery_method', 20);
 
-            // SEM default — preenchimento obrigatório: valor depende da fórmula anual
-            // sum → 24.00 | simple_avg → 6.00
+            $table->string('rounding_mode', 20)->default('half_up');
+
             $table->decimal('min_passing_score', 5, 2);
             $table->decimal('min_period_score', 4, 2);
+
             $table->decimal('min_attendance_percentage', 5, 2);
 
             $table->boolean('allows_final_exam')->default(true);
@@ -66,6 +70,18 @@ return new class() extends Migration
             ADD CONSTRAINT check_sy_dates
             CHECK (end_date > start_date)
         ');
+
+        DB::statement('
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_grade_decimal_places
+            CHECK (grade_decimal_places BETWEEN 0 AND 2)
+        ');
+
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_rounding_mode
+            CHECK (rounding_mode IN ('half_up','ceiling'))
+        ");
     }
 
     public function down(): void
