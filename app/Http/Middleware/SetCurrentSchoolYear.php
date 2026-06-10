@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Context\SchoolContext;
-use App\Context\SchoolYearContext;
+use App\Contexts\SchoolContext;
+use App\Contexts\SchoolYearContext;
+use App\Enums\ProgressStatus;
 use App\Models\SchoolYear;
 use Closure;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class SetCurrentSchoolYear
     {
         $schoolYear = SchoolYear::query()
             ->where('school_id', $this->schoolContext->id())
-            ->active()
+            ->where('status', ProgressStatus::InProgress)
             ->first();
 
         if ($schoolYear) {

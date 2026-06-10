@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Context\SchoolContext;
-use App\Context\SchoolYearContext;
+use App\Contexts\SchoolContext;
+use App\Contexts\SchoolYearContext;
 use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SchoolYearResource;
 use App\Models\User;
@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
+use Spatie\Permission\Models\Role;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,12 +34,12 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name'        => config('app.name'),
-            'auth'        => $this->authData($request),
-            'sidebarOpen' => $this->sidebarOpen($request),
+            'auth'        => fn (): array => $this->authData($request),
+            'sidebarOpen' => fn (): bool => $this->sidebarOpen($request),
         ];
     }
 
-    // #
+    // # Helpers
 
     private function authData(Request $request): array
     {
@@ -55,7 +56,8 @@ class HandleInertiaRequests extends Middleware
         }
 
         return [
-            'user'              => $this->userData($user),
+            'user' => $this->userData($user),
+
             'availableSchools'  => $this->availableSchools($user),
             'currentSchool'     => $this->currentSchool(),
             'currentSchoolYear' => $this->currentSchoolYear(),
@@ -64,9 +66,12 @@ class HandleInertiaRequests extends Middleware
 
     private function userData(User $user): array
     {
+        /** @var Role|null $role */
+        $role = $user->roles->first();
+
         return [
             ...$user->only('id', 'name', 'email', 'avatar'),
-            'role' => $user->roles->first()?->name,
+            'role' => $role?->name,
         ];
     }
 
@@ -78,32 +83,24 @@ class HandleInertiaRequests extends Middleware
             function () use ($user): Collection {
                 $schools = $user->schools()
                     ->wherePivot('is_active', true)
-                    ->orderBy('name')
-                    ->limit(2)
+                    ->orderBy('full_name')
                     ->get(['schools.id', 'schools.full_name', 'schools.slug']);
 
-                if ($schools->count() < 2) {
-                    return collect();
-                }
-
-                return $user->schools()
-                    ->wherePivot('is_active', true)
-                    ->orderBy('name')
-                    ->get(['schools.id', 'schools.full_name', 'schools.slug']);
+                return $schools->count() < 2 ? collect() : $schools;
             }
         );
     }
 
     private function currentSchool(): ?SchoolResource
     {
-        return $this->schoolContext->hasSchool()
+        return $this->schoolContext->has()
             ? SchoolResource::make($this->schoolContext->get())
             : null;
     }
 
     private function currentSchoolYear(): ?SchoolYearResource
     {
-        return $this->schoolYearContext->hasSchoolYear()
+        return $this->schoolYearContext->has()
             ? SchoolYearResource::make($this->schoolYearContext->get())
             : null;
     }

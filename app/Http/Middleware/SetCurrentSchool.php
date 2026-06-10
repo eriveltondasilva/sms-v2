@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Context\SchoolContext;
+use App\Contexts\SchoolContext;
 use App\Models\School;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,16 +21,25 @@ class SetCurrentSchool
 
     public function handle(Request $request, Closure $next): Response
     {
-        $school = School::query()
-            ->slug($request->route('school'))
-            ->active()
-            ->firstOrFail();
+        $slug = $request->route('school');
 
-        /** @var User $user */
+        $school = Cache::remember(
+            "school_slug:{$slug}",
+            now()->addMinutes(60),
+            fn () => School::query()->slug($slug)->firstOrFail()
+        );
+
+        abort_unless(
+            $school->is_active,
+            403,
+            'Esta escola encontra-se inativa no momento. Entre em contato com a administração.'
+        );
+
+        /** @var User|null $user */
         $user = $request->user();
 
         abort_unless(
-            $user->hasAccessToSchool($school),
+            $user && $user->hasAccessToSchool($school),
             403,
             'Acesso negado a esta escola.'
         );
