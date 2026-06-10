@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\Role;
+use App\Enums\Role as RoleEnum;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'avatar'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -25,57 +25,60 @@ class User extends Authenticatable
 
     use HasRoles;
     use Notifiable;
+    use SoftDeletes;
     use TwoFactorAuthenticatable;
 
     protected function casts(): array
     {
         return [
-            'email_verified_at'       => 'datetime',
-            'password'                => 'hashed',
+            'password' => 'hashed',
+
+            'is_active' => 'boolean',
+
             'two_factor_confirmed_at' => 'datetime',
+            'email_verified_at'       => 'datetime',
+            'last_login_at'           => 'datetime',
         ];
     }
 
-    // region Relationships
+    // # Relations
 
     /**
      * @return BelongsToMany<School, $this>
      */
     public function schools(): BelongsToMany
     {
-        return $this->belongsToMany(School::class)
-            ->withPivot('is_revoked')
+        return $this->belongsToMany(School::class, 'school_user')
+            ->withPivot('is_active')
             ->withTimestamps();
     }
 
-    // endregion
+    // # Helpers
 
     public function isSuperAdmin(): bool
     {
-        return $this->hasRole(Role::SuperAdmin);
+        return $this->hasRole(RoleEnum::SuperAdmin);
     }
 
     public function isAdmin(): bool
     {
-        return $this->hasRole(Role::Admin);
+        return $this->hasRole(RoleEnum::Admin);
     }
 
-    public function activeSchool(): ?School
+    public function isTeacher(): bool
     {
-        $schoolId = session('active_school_id');
+        return $this->hasRole(RoleEnum::Teacher);
+    }
 
-        if (! $schoolId) {
-            return null;
+    public function hasAccessToSchool(School $school): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
         }
 
-        return $this->schools->firstWhere('id', $schoolId);
-    }
-
-    public function hasSchool(int $schoolId): bool
-    {
-        return $this->schools
-            ->where('id', $schoolId)
-            ->where('pivot.is_revoked', false)
-            ->isNotEmpty();
+        return $this->schools()
+            ->wherePivot('is_active', true)
+            ->where('schools.id', $school->id)
+            ->exists();
     }
 }
