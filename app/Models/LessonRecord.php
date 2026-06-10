@@ -18,6 +18,14 @@ class LessonRecord extends Model
 
     // # Relations
     /**
+     * @return BelongsTo<School, $this>
+     */
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
+    }
+
+    /**
      * @return BelongsTo<Lesson, $this>
      */
     public function lesson(): BelongsTo

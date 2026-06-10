@@ -53,7 +53,7 @@ class Teacher extends Model
     public function schools(): BelongsToMany
     {
         return $this->belongsToMany(School::class, 'school_teacher')
-            ->withPivot(['qualification', 'hire_date', 'termination_date', 'is_active', 'bank_data'])
+            ->withPivot(['qualification', 'hire_date', 'termination_date', 'termination_reason', 'is_active', 'bank_data'])
             ->withTimestamps();
     }
 
@@ -76,6 +76,6 @@ class Teacher extends Model
     #[Scope]
     protected function forSchool(Builder $query, int|School $school): Builder
     {
-        return $query->whereHas('schools', fn (\Illuminate\Contracts\Database\Query\Builder $q) => $q->where('schools.id', $school instanceof School ? $school->id : $school));
+        return $query->whereHas('schools', fn (Builder $query) => $query->where('schools.id', $school instanceof School ? $school->id : $school));
     }
 }

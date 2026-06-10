@@ -79,6 +79,11 @@ class AcademicPeriod extends Model
 
     public function isOpen(): bool
     {
-        return $this->status !== ProgressStatus::Finished;
+        return $this->status === ProgressStatus::InProgress;
+    }
+
+    public function containsDate(Carbon $date): bool
+    {
+        return $date->between($this->start_date, $this->end_date);
     }
 }

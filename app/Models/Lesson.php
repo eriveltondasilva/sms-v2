@@ -90,9 +90,7 @@ class Lesson extends Model
     #[Scope]
     protected function forPeriod(Builder $query, AcademicPeriod $period): Builder
     {
-        return $query
-            ->where('lesson_date', '>=', $period->start_date)
-            ->where('lesson_date', '<=', $period->end_date);
+        return $query->whereBetween('lesson_date', [$period->start_date, $period->end_date]);
     }
 
     // # Helpers

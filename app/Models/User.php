@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasRole(RoleEnum::Admin);
     }
 
+    public function isSecretary(): bool
+    {
+        return $this->hasRole(RoleEnum::Secretary);
+    }
+
     public function isTeacher(): bool
     {
         return $this->hasRole(RoleEnum::Teacher);

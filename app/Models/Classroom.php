@@ -29,7 +29,8 @@ class Classroom extends Model
         return [
             'shift' => ClassroomShift::class,
 
-            'is_active' => 'boolean',
+            'student_max' => 'integer',
+            'is_active'   => 'boolean',
         ];
     }
 

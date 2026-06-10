@@ -34,6 +34,10 @@ class SchoolYear extends Model
     protected function casts(): array
     {
         return [
+            'year'               => 'integer',
+            'total_school_days'  => 'integer',
+            'total_school_hours' => 'integer',
+
             'status' => ProgressStatus::class,
 
             'period_formula_type'    => PeriodFormulaType::class,

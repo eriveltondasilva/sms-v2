@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AssessmentTemplate extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'default_max_score' => 'decimal:2',
+            'default_weight'    => 'decimal:2',
+            'is_active'         => 'boolean',
+        ];
+    }
+
     // # Relations
     /**
      * @return BelongsTo<School, $this>

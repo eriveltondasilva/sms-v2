@@ -90,11 +90,11 @@ class Assessment extends Model
     }
 
     #[Scope]
-    protected function regular(Builder $query): Builder
+    protected function countable(Builder $query): Builder
     {
         return $query->whereIn('category', [
-            AssessmentCategory::Regular->value,
-            AssessmentCategory::Makeup->value,
+            AssessmentCategory::Regular,
+            AssessmentCategory::Makeup,
         ]);
 
     }

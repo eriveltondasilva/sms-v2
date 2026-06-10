@@ -18,6 +18,11 @@ class PeriodResult extends Model
     protected function casts(): array
     {
         return [
+            'total_classes'        => 'integer',
+            'attended_classes'     => 'integer',
+            'justified_absences'   => 'integer',
+            'unjustified_absences' => 'integer',
+
             'grade_status'      => PeriodGradeStatus::class,
             'attendance_status' => PeriodAttendanceStatus::class,
 
@@ -64,5 +69,22 @@ class PeriodResult extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    // #Helpers
+
+    public function isGradeLocked(): bool
+    {
+        return $this->grade_locked_at !== null;
+    }
+
+    public function isAttendanceLocked(): bool
+    {
+        return $this->attendance_locked_at !== null;
+    }
+
+    public function isFullyLocked(): bool
+    {
+        return $this->isGradeLocked() && $this->isAttendanceLocked();
     }
 }

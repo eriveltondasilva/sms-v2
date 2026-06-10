@@ -20,6 +20,14 @@ class Subject extends Model
 
     use SoftDeletes;
 
+    protected function casts(): array
+    {
+        return [
+            'is_active'  => 'boolean',
+            'week_hours' => 'integer',
+        ];
+    }
+
     // # Relations
     /**
      * @return BelongsTo<School, $this>
