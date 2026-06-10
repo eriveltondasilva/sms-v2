@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Enums\Gender;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +23,7 @@ return new class() extends Migration
             $table->string('full_name');
             $table->string('social_name')->nullable();
 
-            $table->char('gender', 1)->default(Gender::DEFAULT);
+            $table->char('gender', 1);
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('nationality', 50)->default('Brasileira');

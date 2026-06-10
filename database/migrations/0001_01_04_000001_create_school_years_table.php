@@ -61,11 +61,11 @@ return new class() extends Migration
             WHERE status = 'in_progress'
         ");
 
-        DB::statement("
+        DB::statement('
             ALTER TABLE school_years
             ADD CONSTRAINT check_sy_dates
             CHECK (end_date > start_date)
-        ");
+        ');
     }
 
     public function down(): void
