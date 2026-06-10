@@ -9,7 +9,6 @@ use App\Models\School;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,11 +22,7 @@ class SetCurrentSchool
     {
         $slug = $request->route('school');
 
-        $school = Cache::remember(
-            "school_slug:{$slug}",
-            now()->addMinutes(60),
-            fn () => School::query()->slug($slug)->firstOrFail()
-        );
+        $school = School::query()->slug($slug)->firstOrFail();
 
         abort_unless(
             $school->is_active,

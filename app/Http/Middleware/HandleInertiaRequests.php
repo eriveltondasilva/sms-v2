@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
-use Spatie\Permission\Models\Role;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -66,12 +65,9 @@ class HandleInertiaRequests extends Middleware
 
     private function userData(User $user): array
     {
-        /** @var Role|null $role */
-        $role = $user->roles->first();
-
         return [
             ...$user->only('id', 'name', 'email', 'avatar'),
-            'role' => $role?->name,
+            'role' => $user->getRoleNames()->first(),
         ];
     }
 
