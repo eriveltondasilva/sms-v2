@@ -13,6 +13,6 @@ parameters:
     excludePaths:
         - app/Concerns/*
 
-    level: 5
-
     tmpDir: /tmp/phpstan
+
+    level: 5

@@ -90,7 +90,7 @@
         "pint:ci": "pint --test",
         "rector": "rector process --dry-run --ansi",
         "rector:fix": "rector process --ansi",
-        "types": "phpstan analyse --memory-limit=1G --ansi",
+        "types": "phpstan analyse --memory-limit=2G --ansi",
         "2xxx": "",
         "fix": [
             "@rector:fix",
