@@ -9,5 +9,4 @@ enum LessonStatus: string
     case Scheduled = 'scheduled';
     case Held = 'held';
     case Cancelled = 'cancelled';
-    case Makeup = 'makeup';
 }
