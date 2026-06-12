@@ -46,12 +46,4 @@ class LessonFactory extends Factory
             'cancellation_reason' => fake()->sentence(),
         ]);
     }
-
-    public function makeup(): static
-    {
-        return $this->state([
-            'status'            => LessonStatus::Makeup,
-            'class_schedule_id' => null,
-        ]);
-    }
 }

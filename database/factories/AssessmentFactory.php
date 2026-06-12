@@ -50,9 +50,4 @@ class AssessmentFactory extends Factory
             'academic_period_id' => null,
         ]);
     }
-
-    public function makeup(): static
-    {
-        return $this->state(['category' => AssessmentCategory::Makeup]);
-    }
 }
