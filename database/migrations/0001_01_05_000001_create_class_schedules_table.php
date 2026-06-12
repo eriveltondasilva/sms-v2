@@ -19,7 +19,8 @@ return new class() extends Migration
 
             // #
 
-            $table->unsignedSmallInteger('weekday');
+            $table->unsignedTinyInteger('weekday');
+
             $table->time('start_time');
 
             $table->date('valid_from');
@@ -38,10 +39,11 @@ return new class() extends Migration
             $table->index(['teaching_assignment_id', 'valid_from', 'valid_until']);
         });
 
+        // # Checks
         DB::statement('
             ALTER TABLE class_schedules
             ADD CONSTRAINT check_cs_weekday
-            CHECK (weekday BETWEEN 1 AND 6)
+            CHECK (weekday BETWEEN 1 AND 7)
         ');
 
         DB::statement('

@@ -31,8 +31,9 @@ return new class() extends Migration
             $table->index('guardian_id');
         });
 
+        // # Uniques
         DB::statement('
-            CREATE UNIQUE INDEX unique_one_primary_guardian_per_student
+            CREATE UNIQUE INDEX unique_primary_guardian_per_student
             ON student_guardian (student_id)
             WHERE is_primary = true
         ');

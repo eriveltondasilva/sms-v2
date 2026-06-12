@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->string('short_name', 50);
             $table->string('motto')->nullable();
 
-            $table->string('slug', 100)->unique();
+            $table->string('slug')->unique();
 
             $table->string('cnpj', 14)->unique();
             $table->string('inep_code', 8)->nullable()->unique();

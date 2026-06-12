@@ -70,6 +70,7 @@ return new class() extends Migration
             $table->index(['teaching_assignment_id', 'attendance_status']);
         });
 
+        // # Checks
         DB::statement("
             ALTER TABLE period_results
             ADD CONSTRAINT check_pr_grade_status
@@ -81,6 +82,29 @@ return new class() extends Migration
             ADD CONSTRAINT check_pr_attendance_status
             CHECK (attendance_status IN ('sufficient','insufficient'))
         ");
+
+        // #
+        DB::statement('
+            ALTER TABLE period_results
+            ADD CONSTRAINT check_pr_grades_non_negative
+            CHECK (
+                calculated_grade >= 0
+                AND final_grade >= 0
+                AND (recovery_grade IS NULL OR recovery_grade >= 0)
+            )
+        ');
+
+        DB::statement('
+            ALTER TABLE period_results
+            ADD CONSTRAINT check_pr_attendance_counts
+            CHECK (
+                total_classes >= 0
+                AND attended_classes >= 0
+                AND justified_absences >= 0
+                AND unjustified_absences >= 0
+                AND (attended_classes + justified_absences + unjustified_absences) <= total_classes
+            )
+        ');
     }
 
     public function down(): void

@@ -22,8 +22,8 @@ return new class() extends Migration
 
             // #
 
-            $table->string('name', 50);
-            $table->string('room', 30)->nullable();
+            $table->string('name');
+            $table->string('room', 50)->nullable();
             $table->string('shift', 20);
 
             $table->unsignedSmallInteger('student_max');
@@ -35,11 +35,6 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(
-                ['school_year_id', 'grade_level_id', 'name'],
-                'unique_classrooms_sy_ogl_name'
-            );
-
             $table->index(['school_id', 'is_active']);
             $table->index(['school_year_id', 'is_active']);
             $table->index(['school_year_id', 'name']);
@@ -47,11 +42,25 @@ return new class() extends Migration
             $table->index('main_teacher_id');
         });
 
+        // # Uniques
+        DB::statement('
+            CREATE UNIQUE INDEX unique_classrooms_sy_ogl_name
+            ON classrooms (school_year_id, grade_level_id, name)
+            WHERE deleted_at IS NULL
+        ');
+
+        // # Checks
         DB::statement("
             ALTER TABLE classrooms
-            ADD CONSTRAINT chk_classroom_shift
+            ADD CONSTRAINT check_classroom_shift
             CHECK (shift IN ('morning','afternoon','evening'))
         ");
+
+        DB::statement('
+            ALTER TABLE classrooms
+            ADD CONSTRAINT check_classroom_student_max
+            CHECK (student_max > 0)
+        ');
     }
 
     public function down(): void

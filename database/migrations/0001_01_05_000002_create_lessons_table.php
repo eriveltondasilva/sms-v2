@@ -14,12 +14,7 @@ return new class() extends Migration
             $table->id();
 
             $table->foreignId('class_schedule_id')->nullable()->constrained()->restrictOnDelete();
-            // NULL para aulas de reposição — não possuem agendamento recorrente de origem.
-
             $table->foreignId('teaching_assignment_id')->constrained()->restrictOnDelete();
-            // Denormalizado de class_schedules.teaching_assignment_id.
-            // Obrigatório mesmo em reposições — identifica a disciplina/turma.
-
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
 
             $table->foreignId('cancelled_by')->nullable()->constrained('users')->nullOnDelete();
@@ -29,14 +24,11 @@ return new class() extends Migration
             $table->date('lesson_date');
 
             $table->time('start_time')->nullable();
-            // Denormalizado de class_schedules.start_time para ocorrências regulares.
-            // Obrigatório (preenchido manualmente) para aulas de reposição.
 
             $table->string('status', 20);
             // scheduled → aula prevista, ainda não ocorreu.
             // held      → aula realizada.
             // cancelled → aula cancelada.
-            // makeup    → aula de reposição
 
             $table->text('cancellation_reason')->nullable();
 
@@ -44,18 +36,31 @@ return new class() extends Migration
 
             // #
 
-            $table->index(['teaching_assignment_id', 'lesson_date']);
             $table->index(['school_id', 'lesson_date']);
             $table->index(['school_id', 'status']);
-            $table->index(['teaching_assignment_id', 'status']);
+
+            $table->index(['teaching_assignment_id', 'lesson_date']);
+            $table->index(
+                ['teaching_assignment_id', 'status', 'lesson_date'],
+                'idx_lessons_ta_status_date'
+            );
+
             $table->index('class_schedule_id');
             $table->index('cancelled_by');
         });
 
+        // # Uniques
+        DB::statement('
+            CREATE UNIQUE INDEX unique_lesson_per_schedule_date
+            ON lessons (class_schedule_id, lesson_date)
+            WHERE class_schedule_id IS NOT NULL
+        ');
+
+        // # Checks
         DB::statement("
             ALTER TABLE lessons
             ADD CONSTRAINT check_lessons_status
-            CHECK (status IN ('scheduled','held','cancelled','makeup'))
+            CHECK (status IN ('scheduled','held','cancelled'))
         ");
     }
 

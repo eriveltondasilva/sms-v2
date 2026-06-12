@@ -23,10 +23,12 @@ return new class() extends Migration
 
             $table->string('title');
             $table->text('description')->nullable();
+
             $table->string('location')->nullable();
 
             $table->date('start_date');
             $table->date('end_date')->nullable();
+
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
 
@@ -44,6 +46,7 @@ return new class() extends Migration
             $table->index('created_by');
         });
 
+        // # Checks
         DB::statement("
             ALTER TABLE school_events
             ADD CONSTRAINT check_event_type

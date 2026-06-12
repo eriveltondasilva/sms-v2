@@ -14,13 +14,9 @@ return new class() extends Migration
             $table->id();
 
             $table->foreignId('lesson_id')->unique()->constrained()->restrictOnDelete();
-            // 1:1 com lessons — cada aula tem no máximo um diário.
-            // O professor pode preencher em momento independente da chamada.
-
             $table->foreignId('lesson_plan_id')->nullable()->constrained()->nullOnDelete();
-            // Opcional: vincula o diário ao plano de aula seguido.
-
             $table->foreignId('school_id')->constrained()->restrictOnDelete();
+
             $table->foreignId('recorded_by')->nullable()->constrained('users')->nullOnDelete();
 
             // #

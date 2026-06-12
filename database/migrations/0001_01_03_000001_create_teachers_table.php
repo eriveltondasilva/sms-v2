@@ -21,7 +21,7 @@ return new class() extends Migration
             $table->char('gender', 1);
             $table->date('birth_date')->nullable();
 
-            $table->string('cpf', 11)->unique();
+            $table->string('cpf', 11);
             $table->string('rg', 20)->nullable();
 
             $table->string('phone', 11)->nullable();
@@ -34,6 +34,14 @@ return new class() extends Migration
             $table->timestamps();
         });
 
+        // # Uniques
+        DB::statement('
+            CREATE UNIQUE INDEX teachers_cpf_unique
+            ON teachers (cpf)
+            WHERE deleted_at IS NULL
+        ');
+
+        // # Checks
         DB::statement("
             ALTER TABLE teachers
             ADD CONSTRAINT check_teachers_gender

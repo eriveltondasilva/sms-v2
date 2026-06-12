@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -36,21 +37,22 @@ return new class() extends Migration
             $table->index(['school_year_id', 'status']);
         });
 
+        // # Checks
         DB::statement("
             ALTER TABLE academic_periods
-            ADD CONSTRAINT check_ap_status
+            ADD CONSTRAINT check_academic_period_status
             CHECK (status IN ('planned','in_progress','finished'))
         ");
 
         DB::statement('
             ALTER TABLE academic_periods
-            ADD CONSTRAINT check_ap_order
-            CHECK ("order" BETWEEN 1 AND 6)
+            ADD CONSTRAINT check_academic_period_order
+            CHECK ("order" > 0)
         ');
 
         DB::statement('
             ALTER TABLE academic_periods
-            ADD CONSTRAINT check_ap_dates
+            ADD CONSTRAINT check_academic_period_dates
             CHECK (end_date > start_date)
         ');
     }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -24,10 +25,12 @@ return new class() extends Migration
             $table->string('name');
             $table->string('description')->nullable();
 
+            $table->unsignedTinyInteger('order');
+            $table->string('category', 20);
+
             $table->decimal('max_score', 5, 2);
             $table->decimal('weight', 5, 2);
 
-            $table->string('category', 20);
             $table->date('date')->nullable();
 
             $table->timestamps();
@@ -44,6 +47,19 @@ return new class() extends Migration
             $table->index('assessment_template_id');
             $table->index('created_by');
         });
+
+        // # Checks
+        DB::statement('
+            ALTER TABLE assessments
+            ADD CONSTRAINT check_assessment_order
+            CHECK ("order" > 0)
+        ');
+
+        DB::statement("
+                ALTER TABLE assessments
+                ADD CONSTRAINT check_assessment_category
+                CHECK (category IN ('regular', 'period_recovery', 'final_exam'))
+        ");
     }
 
     public function down(): void

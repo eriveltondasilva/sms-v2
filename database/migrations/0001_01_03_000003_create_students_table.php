@@ -26,7 +26,7 @@ return new class() extends Migration
             $table->char('gender', 1);
             $table->date('birth_date')->nullable();
             $table->string('birth_place')->nullable();
-            $table->string('nationality', 50)->default('Brasileira');
+            $table->string('nationality')->default('Brasileira');
             $table->string('color_race')->nullable();
 
             $table->string('rg', 20)->nullable();
@@ -59,14 +59,25 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(['school_id', 'registration'], 'unique_registration_per_school');
-            $table->unique(['school_id', 'cpf'], 'unique_cpf_per_school');
-
             $table->index('registration');
             $table->index(['school_id', 'full_name']);
             $table->index(['school_id', 'status']);
         });
 
+        // # Uniques
+        DB::statement('
+            CREATE UNIQUE INDEX unique_registration_per_school
+            ON students (school_id, registration)
+            WHERE deleted_at IS NULL
+        ');
+
+        DB::statement('
+            CREATE UNIQUE INDEX unique_cpf_per_school
+            ON students (school_id, cpf)
+            WHERE deleted_at IS NULL AND cpf IS NOT NULL
+        ');
+
+        // # Checks
         DB::statement("
             ALTER TABLE students
             ADD CONSTRAINT check_students_gender

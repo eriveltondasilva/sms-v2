@@ -44,6 +44,15 @@ return new class() extends Migration
             $table->index('classroom_id');
         });
 
+        // # Uniques
+        DB::statement("
+            CREATE UNIQUE
+            INDEX unique_active_enrollment
+            ON enrollments (student_id, school_year_id)
+            WHERE status = 'active'
+        ");
+
+        // # Checks
         DB::statement("
             ALTER TABLE enrollments
             ADD CONSTRAINT check_enrollment_status
@@ -54,13 +63,6 @@ return new class() extends Migration
             ALTER TABLE enrollments
             ADD CONSTRAINT check_enrollment_final_result
             CHECK (final_result IN ('approved', 'failed', 'transferred', 'dropout') OR final_result IS NULL)
-        ");
-
-        DB::statement("
-            CREATE UNIQUE
-            INDEX unique_active_enrollment
-            ON enrollments (student_id, school_year_id)
-            WHERE status = 'active'
         ");
     }
 

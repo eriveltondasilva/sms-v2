@@ -17,7 +17,7 @@ return new class() extends Migration
 
             // #
 
-            $table->smallInteger('year')->unsigned();
+            $table->unsignedSmallInteger('year');
             $table->string('status', 20);
 
             $table->date('start_date');
@@ -34,7 +34,7 @@ return new class() extends Migration
             $table->string('period_recovery_method', 20);
             $table->string('annual_recovery_method', 20);
 
-            $table->string('rounding_mode', 20)->default('half_up');
+            $table->string('rounding_mode', 20);
 
             $table->decimal('min_passing_score', 5, 2);
             $table->decimal('min_period_score', 4, 2);
@@ -53,6 +53,14 @@ return new class() extends Migration
             $table->index(['school_id', 'status']);
         });
 
+        // # Unique
+        DB::statement("
+            CREATE UNIQUE INDEX unique_sy_in_progress
+            ON school_years (school_id)
+            WHERE status = 'in_progress'
+        ");
+
+        // # Checks
         DB::statement("
             ALTER TABLE school_years
             ADD CONSTRAINT check_school_year_status
@@ -60,9 +68,9 @@ return new class() extends Migration
         ");
 
         DB::statement("
-            CREATE UNIQUE INDEX unique_sy_in_progress
-            ON school_years (school_id)
-            WHERE status = 'in_progress'
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_rounding_mode
+            CHECK (rounding_mode IN ('half_up','ceiling'))
         ");
 
         DB::statement('
@@ -77,16 +85,25 @@ return new class() extends Migration
             CHECK (grade_decimal_places BETWEEN 0 AND 2)
         ');
 
-        DB::statement("
+        DB::statement('
             ALTER TABLE school_years
-            ADD CONSTRAINT check_sy_rounding_mode
-            CHECK (rounding_mode IN ('half_up','ceiling'))
-        ");
+            ADD CONSTRAINT check_sy_positive_counts
+            CHECK (total_school_days > 0 AND total_school_hours > 0)
+        ');
+
+        DB::statement('
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_score_ranges
+            CHECK (
+                min_passing_score >= 0
+                AND min_period_score >= 0
+                AND min_attendance_percentage BETWEEN 0 AND 100
+            )
+        ');
     }
 
     public function down(): void
     {
-        DB::statement('DROP INDEX IF EXISTS unique_sy_in_progress');
         Schema::dropIfExists('school_years');
     }
 };

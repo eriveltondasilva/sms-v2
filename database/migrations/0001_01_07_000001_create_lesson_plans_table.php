@@ -21,11 +21,11 @@ return new class() extends Migration
 
             // #
 
-            $table->string('title');
             $table->text('content');
 
             $table->text('objectives')->nullable();
             $table->text('methodology')->nullable();
+            $table->text('resources')->nullable();
 
             $table->jsonb('bncc_codes')->nullable();
             // bncc_codes (jsonb): códigos de habilidades da Base Nacional Comum Curricular (BNCC).
@@ -36,8 +36,8 @@ return new class() extends Migration
             //   "EF02MA07"
             // ]
 
-            $table->date('starts_on');
-            $table->date('ends_on')->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table->timestamps();
 

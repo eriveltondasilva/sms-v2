@@ -31,6 +31,8 @@ return new class() extends Migration
             // #
 
             $table->unique(['school_id', 'cpf'], 'school_guardian_unique');
+
+            $table->index(['school_id', 'name'], 'idx_guardians_school_name');
         });
     }
 
