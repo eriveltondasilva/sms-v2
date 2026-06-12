@@ -1,8 +1,13 @@
 {
-    "agents": ["gemini"],
+    "agents": [
+        "copilot"
+    ],
     "cloud": true,
     "guidelines": true,
-    "packages": ["spatie/laravel-permission", "fruitcake/laravel-debugbar"],
+    "packages": [
+        "spatie/laravel-permission",
+        "fruitcake/laravel-debugbar"
+    ],
     "skills": [
         "fortify-development",
         "laravel-best-practices",
