@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\AssessmentCategory;
 use Database\Factories\AssessmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property-read AssessmentCategory $category
  */
+#[Fillable([
+    'teaching_assignment_id',
+    'academic_period_id',
+    'school_id',
+    'assessment_template_id',
+    'name',
+    'description',
+    'max_score',
+    'weight',
+    'category',
+    'date',
+])]
 class Assessment extends Model
 {
     /** @use HasFactory<AssessmentFactory> */
@@ -30,6 +43,8 @@ class Assessment extends Model
 
             'max_score' => 'decimal:2',
             'weight'    => 'decimal:2',
+
+            'order' => 'integer',
         ];
     }
 
@@ -90,13 +105,9 @@ class Assessment extends Model
     }
 
     #[Scope]
-    protected function countable(Builder $query): Builder
+    protected function regular(Builder $query): Builder
     {
-        return $query->whereIn('category', [
-            AssessmentCategory::Regular,
-            AssessmentCategory::Makeup,
-        ]);
-
+        return $query->where('category', AssessmentCategory::Regular);
     }
 
     // # Helpers

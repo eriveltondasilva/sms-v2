@@ -19,7 +19,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['full_name', 'short_name', 'motto', 'slug', 'cnpj', 'inep_code', 'phone', 'email', 'address', 'social_medias'])]
+#[Fillable([
+    'full_name',
+    'short_name',
+    'motto',
+    'slug',
+    'cnpj',
+    'inep_code',
+    'phone',
+    'email',
+    'address',
+    'is_active',
+    'social_medias',
+])]
 #[UsePolicy(SchoolPolicy::class)]
 class School extends Model
 {
@@ -31,7 +43,8 @@ class School extends Model
     protected function casts(): array
     {
         return [
-            'is_active'     => 'boolean',
+            'is_active' => 'boolean',
+
             'social_medias' => 'array',
         ];
     }

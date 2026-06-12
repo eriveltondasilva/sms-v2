@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\AttendanceStatus;
 use Database\Factories\AttendanceFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property-read AttendanceStatus $status
  */
+#[Fillable([
+    'lesson_id',
+    'enrollment_id',
+    'teaching_assignment_id',
+    'school_id',
+    'status',
+    'justification',
+])]
 class Attendance extends Model
 {
     /** @use HasFactory<AttendanceFactory> */

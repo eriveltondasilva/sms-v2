@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Fillable([
+    'lesson_id',
+    'lesson_plan_id',
+    'school_id',
+    'topic',
+    'diary_filled_at',
+])]
 class LessonRecord extends Model
 {
     protected function casts(): array

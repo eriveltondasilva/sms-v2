@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\EnrollmentFinalResult;
 use App\Enums\EnrollmentStatus;
 use Database\Factories\EnrollmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read EnrollmentStatus $status
  * @property-read EnrollmentFinalResult $final_result
  */
+#[Fillable([
+    'student_id',
+    'classroom_id',
+    'school_year_id',
+    'school_id',
+    'previous_enrollment_id',
+    'status',
+    'notes',
+    'enrolled_date',
+    'finalized_date',
+])]
 class Enrollment extends Model
 {
     /** @use HasFactory<EnrollmentFactory> */
@@ -110,7 +122,6 @@ class Enrollment extends Model
     protected function active(Builder $query): Builder
     {
         return $query->where('status', EnrollmentStatus::Active);
-
     }
 
     // # Helpers

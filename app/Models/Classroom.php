@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\ClassroomShift;
 use Database\Factories\ClassroomFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property-read ClassroomShift $shift
  */
+#[Fillable([
+    'school_id',
+    'school_year_id',
+    'grade_level_id',
+    'main_teacher_id',
+    'name',
+    'room',
+    'shift',
+    'student_max',
+    'is_active',
+])]
 class Classroom extends Model
 {
     /** @use HasFactory<ClassroomFactory> */
@@ -30,7 +42,8 @@ class Classroom extends Model
             'shift' => ClassroomShift::class,
 
             'student_max' => 'integer',
-            'is_active'   => 'boolean',
+
+            'is_active' => 'boolean',
         ];
     }
 

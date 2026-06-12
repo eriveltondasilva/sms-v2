@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\ProgressStatus;
 use Database\Factories\AcademicPeriodFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,9 +17,16 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property-read ProgressStatus $status
- * @property-read Carbon         $start_date
- * @property-read Carbon         $end_date
  */
+#[Fillable([
+    'school_year_id',
+    'name',
+    'order',
+    'weight',
+    'start_date',
+    'end_date',
+    'status',
+])]
 class AcademicPeriod extends Model
 {
     /** @use HasFactory<AcademicPeriodFactory> */

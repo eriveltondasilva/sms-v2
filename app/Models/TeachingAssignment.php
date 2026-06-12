@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\TeachingAssignmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[Fillable([
+    'classroom_id',
+    'subject_id',
+    'teacher_id',
+    'school_id',
+    'workload_hours',
+    'start_date',
+    'end_date',
+    'is_active',
+])]
 class TeachingAssignment extends Model
 {
     /** @use HasFactory<TeachingAssignmentFactory> */
@@ -23,6 +34,8 @@ class TeachingAssignment extends Model
     protected function casts(): array
     {
         return [
+            'workload_hours' => 'integer',
+
             'start_date' => 'date',
             'end_date'   => 'date',
 

@@ -27,9 +27,24 @@ use Illuminate\Support\Str;
  * @property-read StudentStatus $status
  */
 #[Fillable([
-    'school_id', 'public_id', 'registration', 'full_name', 'social_name', 'gender',
-    'birth_date', 'birth_place', 'nationality', 'color_race', 'rg', 'cpf',
-    'phone', 'email', 'address', 'status', 'status_notes', 'health_data', 'special_needs',
+    'school_id',
+    'registration',
+    'full_name',
+    'social_name',
+    'gender',
+    'birth_date',
+    'birth_place',
+    'nationality',
+    'color_race',
+    'rg',
+    'cpf',
+    'phone',
+    'email',
+    'address',
+    'status',
+    'status_notes',
+    'health_data',
+    'special_needs',
 ])]
 class Student extends Model
 {

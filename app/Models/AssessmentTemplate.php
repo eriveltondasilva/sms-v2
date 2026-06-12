@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[Fillable([
+    'school_id',
+    'name',
+    'description',
+    'default_max_score',
+    'default_weight',
+    'is_active',
+])]
 class AssessmentTemplate extends Model
 {
     protected function casts(): array
@@ -15,7 +24,8 @@ class AssessmentTemplate extends Model
         return [
             'default_max_score' => 'decimal:2',
             'default_weight'    => 'decimal:2',
-            'is_active'         => 'boolean',
+
+            'is_active' => 'boolean',
         ];
     }
 

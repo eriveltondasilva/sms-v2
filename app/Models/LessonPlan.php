@@ -4,10 +4,23 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[Fillable([
+    'teaching_assignment_id',
+    'academic_period_id',
+    'school_id',
+    'content',
+    'objectives',
+    'methodology',
+    'resources',
+    'bncc_codes',
+    'start_date',
+    'end_date',
+])]
 class LessonPlan extends Model
 {
     protected function casts(): array
@@ -15,8 +28,8 @@ class LessonPlan extends Model
         return [
             'bncc_codes' => 'array',
 
-            'starts_on' => 'date',
-            'ends_on'   => 'date',
+            'start_date' => 'date',
+            'end_date'   => 'date',
         ];
     }
 

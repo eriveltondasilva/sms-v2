@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\LessonStatus;
 use Database\Factories\LessonFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property-read LessonStatus $status
  */
+#[Fillable([
+    'class_schedule_id',
+    'teaching_assignment_id',
+    'school_id',
+    'lesson_date',
+    'start_time',
+    'status',
+    'cancellation_reason',
+])]
 class Lesson extends Model
 {
     /** @use HasFactory<LessonFactory> */
@@ -28,6 +38,8 @@ class Lesson extends Model
             'status' => LessonStatus::class,
 
             'lesson_date' => 'date',
+
+            'start_time' => 'time',
         ];
     }
 

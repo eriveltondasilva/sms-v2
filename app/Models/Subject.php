@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\SubjectFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[Fillable([
+    'school_id',
+    'name',
+    'code',
+    'week_hours',
+    'is_active',
+])]
 class Subject extends Model
 {
     /** @use HasFactory<SubjectFactory> */
@@ -23,7 +31,8 @@ class Subject extends Model
     protected function casts(): array
     {
         return [
-            'is_active'  => 'boolean',
+            'is_active' => 'boolean',
+
             'week_hours' => 'integer',
         ];
     }

@@ -10,6 +10,7 @@ use App\Enums\ProgressStatus;
 use App\Enums\RecoveryMethod;
 use App\Enums\RoundingMode;
 use Database\Factories\SchoolYearFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read RecoveryMethod $annual_recovery_method
  * @property-read RoundingMode $rounding_mode
  */
+#[Fillable([
+    'school_id',
+    'year',
+    'status',
+    'start_date',
+    'end_date',
+    'grade_decimal_places',
+    'total_school_days',
+    'total_school_hours',
+    'period_formula_type',
+    'annual_formula_type',
+    'period_recovery_method',
+    'annual_recovery_method',
+    'rounding_mode',
+    'min_passing_score',
+    'min_period_score',
+    'min_attendance_percentage',
+    'allows_final_exam',
+])]
 class SchoolYear extends Model
 {
     /** @use HasFactory<SchoolYearFactory> */
@@ -56,7 +76,7 @@ class SchoolYear extends Model
 
             'allows_final_exam' => 'boolean',
 
-            'year'               => 'integer',
+            'year' => 'integer',
 
             'total_school_days'  => 'integer',
             'total_school_hours' => 'integer',

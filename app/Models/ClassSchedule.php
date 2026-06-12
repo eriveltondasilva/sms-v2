@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\Weekdays;
 use Database\Factories\ClassScheduleFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property-read Weekdays $weekday
  */
+#[Fillable([
+    'teaching_assignment_id',
+    'school_id',
+    'weekday',
+    'start_time',
+    'valid_from',
+    'valid_until',
+])]
 class ClassSchedule extends Model
 {
     /** @use HasFactory<ClassScheduleFactory> */
@@ -25,6 +34,8 @@ class ClassSchedule extends Model
     {
         return [
             'weekday' => Weekdays::class,
+
+            'start_time' => 'time',
 
             'valid_from'  => 'date',
             'valid_until' => 'date',

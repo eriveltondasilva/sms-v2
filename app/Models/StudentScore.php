@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\StudentScoreFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Fillable([
+    'assessment_id',
+    'enrollment_id',
+    'school_id',
+    'score',
+])]
 class StudentScore extends Model
 {
     /** @use HasFactory<StudentScoreFactory> */

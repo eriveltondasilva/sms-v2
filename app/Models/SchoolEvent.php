@@ -5,12 +5,27 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\SchoolEventType;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property-read SchoolEventType $type
  */
+#[Fillable([
+    'school_year_id',
+    'school_id',
+    'classroom_id',
+    'title',
+    'description',
+    'location',
+    'start_date',
+    'end_date',
+    'start_time',
+    'end_time',
+    'type',
+    'blocks_lessons',
+])]
 class SchoolEvent extends Model
 {
     protected function casts(): array
@@ -22,6 +37,9 @@ class SchoolEvent extends Model
 
             'start_date' => 'date',
             'end_date'   => 'date',
+
+            'start_time' => 'time',
+            'end_time'   => 'time',
         ];
     }
 

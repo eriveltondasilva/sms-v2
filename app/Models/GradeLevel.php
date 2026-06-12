@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GradeLevel extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'order' => 'integer',
+        ];
+    }
+
     /**
      * @return HasMany<Classroom, $this>
      */

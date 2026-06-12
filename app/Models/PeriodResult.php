@@ -18,13 +18,13 @@ class PeriodResult extends Model
     protected function casts(): array
     {
         return [
+            'grade_status'      => PeriodGradeStatus::class,
+            'attendance_status' => PeriodAttendanceStatus::class,
+
             'total_classes'        => 'integer',
             'attended_classes'     => 'integer',
             'justified_absences'   => 'integer',
             'unjustified_absences' => 'integer',
-
-            'grade_status'      => PeriodGradeStatus::class,
-            'attendance_status' => PeriodAttendanceStatus::class,
 
             'calculated_grade'      => 'decimal:2',
             'recovery_grade'        => 'decimal:2',

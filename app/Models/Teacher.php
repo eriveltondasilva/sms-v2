@@ -34,7 +34,8 @@ class Teacher extends Model
             'gender' => Gender::class,
 
             'birth_date' => 'date',
-            'is_active'  => 'boolean',
+
+            'is_active' => 'boolean',
         ];
     }
 
