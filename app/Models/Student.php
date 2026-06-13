@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\EnrollmentStatus;
 use App\Enums\Gender;
 use App\Enums\StudentStatus;
+use Carbon\CarbonImmutable;
 use Database\Factories\StudentFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -25,6 +26,7 @@ use Illuminate\Support\Str;
 /**
  * @property-read Gender $gender
  * @property-read StudentStatus $status
+ * @property-read CarbonImmutable|null $birth_date
  */
 #[Fillable([
     'school_id',
