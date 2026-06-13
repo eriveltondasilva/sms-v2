@@ -43,7 +43,7 @@ return new class() extends Migration
         DB::statement('
             CREATE UNIQUE INDEX unique_ta_classroom_subject
             ON teaching_assignments (classroom_id, subject_id)
-            WHERE deleted_at IS NULL
+            WHERE is_active = true AND deleted_at IS NULL
         ');
 
         // # Checks
