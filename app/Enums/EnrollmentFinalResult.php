@@ -7,7 +7,7 @@ namespace App\Enums;
 enum EnrollmentFinalResult: string
 {
     case Approved = 'approved';
-    case Failed = 'failed';
     case Transferred = 'transferred';
+    case Failed = 'failed';
     case Dropout = 'dropout';
 }

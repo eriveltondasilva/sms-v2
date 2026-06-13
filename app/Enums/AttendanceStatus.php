@@ -9,13 +9,4 @@ enum AttendanceStatus: string
     case Present = 'P';
     case Absent = 'A';
     case Justified = 'J';
-
-    public function label(): string
-    {
-        return match ($this) {
-            self::Present   => 'Presente',
-            self::Absent    => 'Ausente',
-            self::Justified => 'Justificado',
-        };
-    }
 }

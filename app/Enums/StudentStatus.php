@@ -11,15 +11,4 @@ enum StudentStatus: string
     case Transferred = 'transferred';
     case Graduated = 'graduated';
     case Dropout = 'dropout';
-
-    public function label(): string
-    {
-        return match ($this) {
-            self::Active      => 'Ativo',
-            self::Inactive    => 'Inativo',
-            self::Transferred => 'Transferido',
-            self::Graduated   => 'Graduado',
-            self::Dropout     => 'Desistente',
-        };
-    }
 }
