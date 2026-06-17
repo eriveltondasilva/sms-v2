@@ -38,8 +38,6 @@ class Lesson extends Model
             'status' => LessonStatus::class,
 
             'lesson_date' => 'date',
-
-            'start_time' => 'time',
         ];
     }
 

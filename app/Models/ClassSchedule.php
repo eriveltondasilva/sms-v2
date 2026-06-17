@@ -35,8 +35,6 @@ class ClassSchedule extends Model
         return [
             'weekday' => Weekdays::class,
 
-            'start_time' => 'time',
-
             'valid_from'  => 'date',
             'valid_until' => 'date',
         ];
