@@ -29,6 +29,7 @@ class AssessmentFactory extends Factory
             'name'        => 'Prova ' . fake()->numberBetween(1, 4),
             'description' => null,
 
+            'order'     => fake()->numberBetween(1, 10),
             'max_score' => 10.00,
             'weight'    => 1.00,
 

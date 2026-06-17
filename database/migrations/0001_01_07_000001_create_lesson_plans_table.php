@@ -52,11 +52,11 @@ return new class() extends Migration
             $table->index('created_by');
         });
 
-        DB::statement("
+        DB::statement('
             ALTER TABLE lesson_plans
             ADD CONSTRAINT check_lesson_plan_date_range
             CHECK (end_date >= start_date)
-        ");
+        ');
     }
 
     public function down(): void

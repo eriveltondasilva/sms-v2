@@ -6,10 +6,12 @@ namespace Database\Seeders;
 
 use App\Enums\AnnualFormulaType;
 use App\Enums\ClassroomShift;
+use App\Enums\GradeLevelCode;
 use App\Enums\PeriodFormulaType;
 use App\Enums\ProgressStatus;
 use App\Enums\RecoveryMethod;
 use App\Enums\Role as RoleEnum;
+use App\Enums\RoundingMode;
 use App\Models\AcademicPeriod;
 use App\Models\Classroom;
 use App\Models\ClassSchedule;
@@ -61,7 +63,7 @@ class DevelopmentSeeder extends Seeder
     {
         $admin = User::factory()->create([
             'name'     => 'Admin Teste',
-            'email'    => 'admin@eme.dev',
+            'email'    => 'admin@example.com',
             'password' => Hash::make('password'),
         ]);
 
@@ -88,18 +90,23 @@ class DevelopmentSeeder extends Seeder
 
             'year' => now()->year,
 
-            'status'                 => ProgressStatus::InProgress,
-            'period_formula_type'    => PeriodFormulaType::WeightedAvg,
-            'annual_formula_type'    => AnnualFormulaType::Sum,
+            'status' => ProgressStatus::InProgress,
+
+            'period_formula_type' => PeriodFormulaType::WeightedAvg,
+            'annual_formula_type' => AnnualFormulaType::Sum,
+
             'period_recovery_method' => RecoveryMethod::BestScore,
             'annual_recovery_method' => RecoveryMethod::BestScore,
+
+            'rounding_mode'        => RoundingMode::HalfUp,
+            'grade_decimal_places' => 1,
 
             'start_date' => now()->startOfYear(),
             'end_date'   => now()->endOfYear(),
 
+            'min_attendance_percentage' => 75.00,
             'min_passing_score'         => 24.00,
             'min_period_score'          => 6.00,
-            'min_attendance_percentage' => 75.00,
 
             'allows_final_exam' => true,
         ]);
@@ -124,8 +131,8 @@ class DevelopmentSeeder extends Seeder
 
     private function createClassrooms(): void
     {
-        $ef1 = GradeLevel::query()->where('code', 'EF01')->first();
-        $ef2 = GradeLevel::query()->where('code', 'EF06')->first();
+        $ef1 = GradeLevel::query()->where('code', GradeLevelCode::EF_1A)->firstOrFail();
+        $ef2 = GradeLevel::query()->where('code', GradeLevelCode::EF_6A)->firstOrFail();
 
         $this->classroomEf1 = Classroom::factory()->create([
             'school_id'      => $this->school->id,

@@ -8,6 +8,7 @@ use App\Enums\AnnualFormulaType;
 use App\Enums\PeriodFormulaType;
 use App\Enums\ProgressStatus;
 use App\Enums\RecoveryMethod;
+use App\Enums\RoundingMode;
 use App\Models\School;
 use App\Models\SchoolYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,10 +32,14 @@ class SchoolYearFactory extends Factory
 
             'status' => ProgressStatus::Planned,
 
-            'period_formula_type'    => PeriodFormulaType::WeightedAvg,
-            'annual_formula_type'    => AnnualFormulaType::Sum,
+            'period_formula_type' => PeriodFormulaType::WeightedAvg,
+            'annual_formula_type' => AnnualFormulaType::Sum,
+
             'period_recovery_method' => RecoveryMethod::BestScore,
             'annual_recovery_method' => RecoveryMethod::BestScore,
+
+            'rounding_mode'        => RoundingMode::HalfUp,
+            'grade_decimal_places' => 1,
 
             'min_passing_score'         => 24.00,
             'min_period_score'          => 6.00,

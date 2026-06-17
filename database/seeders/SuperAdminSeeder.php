@@ -8,15 +8,16 @@ use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class SuperAdminSeeder extends Seeder
 {
     public function run(): void
     {
         $role = Role::SuperAdmin;
 
         $user = User::factory()->create([
-            'name'  => $role->value,
-            'email' => "{$role->value}@example.com",
+            'name'     => $role->value,
+            'email'    => config('services.super_admin.email'),
+            'password' => config('services.super_admin.password'),
         ]);
 
         $user->assignRole($role->value);
