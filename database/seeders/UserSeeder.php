@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         $role = Role::SuperAdmin;
 
         $user = User::factory()->create([
-            'name'  => $role->label(),
+            'name'  => $role->value,
             'email' => "{$role->value}@example.com",
         ]);
 
