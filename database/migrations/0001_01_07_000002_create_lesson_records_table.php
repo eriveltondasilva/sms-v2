@@ -21,11 +21,8 @@ return new class() extends Migration
 
             // #
 
-            $table->text('topic')->nullable();
-            // Assunto/conteúdo trabalhado na aula — campo livre para o professor.
-
+            $table->string('topic');
             $table->timestamp('diary_filled_at')->nullable();
-            // Momento em que o diário foi efetivamente preenchido (pode ser posterior à aula).
 
             $table->timestamps();
 

@@ -73,6 +73,30 @@ return new class() extends Migration
             CHECK (rounding_mode IN ('half_up','ceiling'))
         ");
 
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_period_formula_type
+            CHECK (period_formula_type IN ('weighted_avg','simple_avg'))
+        ");
+
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_annual_formula_type
+            CHECK (annual_formula_type IN ('sum','simple_avg','weighted_avg'))
+        ");
+
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_period_recovery_method
+            CHECK (period_recovery_method IN ('best_score','average','replace'))
+        ");
+
+        DB::statement("
+            ALTER TABLE school_years
+            ADD CONSTRAINT check_sy_annual_recovery_method
+            CHECK (annual_recovery_method IN ('best_score','average','replace'))
+        ");
+
         DB::statement('
             ALTER TABLE school_years
             ADD CONSTRAINT check_sy_dates

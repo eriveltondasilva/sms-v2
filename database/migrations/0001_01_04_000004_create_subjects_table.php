@@ -39,6 +39,13 @@ return new class() extends Migration
             ON subjects (school_id, code)
             WHERE deleted_at IS NULL
         ');
+
+        // # Checks
+        DB::statement('
+            ALTER TABLE subjects
+            ADD CONSTRAINT check_subjects_week_hours
+            CHECK (week_hours > 0)
+        ');
     }
 
     public function down(): void

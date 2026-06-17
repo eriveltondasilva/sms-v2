@@ -52,6 +52,12 @@ return new class() extends Migration
 
         DB::statement('
             ALTER TABLE academic_periods
+            ADD CONSTRAINT check_ap_weight_positive
+            CHECK (weight IS NULL OR weight > 0)
+        ');
+
+        DB::statement('
+            ALTER TABLE academic_periods
             ADD CONSTRAINT check_academic_period_dates
             CHECK (end_date > start_date)
         ');

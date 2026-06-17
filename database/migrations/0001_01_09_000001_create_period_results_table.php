@@ -83,7 +83,13 @@ return new class() extends Migration
             CHECK (attendance_status IN ('sufficient','insufficient'))
         ");
 
-        // #
+        // # Checks
+        DB::statement('
+            ALTER TABLE period_results
+            ADD CONSTRAINT check_pr_attendance_percentage
+            CHECK (attendance_percentage BETWEEN 0 AND 100)
+        ');
+
         DB::statement('
             ALTER TABLE period_results
             ADD CONSTRAINT check_pr_grades_non_negative

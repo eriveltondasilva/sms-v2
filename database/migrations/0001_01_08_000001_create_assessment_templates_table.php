@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -30,6 +31,12 @@ return new class() extends Migration
 
             $table->index(['school_id', 'is_active']);
         });
+
+        DB::statement('
+            ALTER TABLE assessment_templates
+            ADD CONSTRAINT check_at_defaults_positive
+            CHECK (default_max_score > 0 AND default_weight > 0)
+        ');
     }
 
     public function down(): void

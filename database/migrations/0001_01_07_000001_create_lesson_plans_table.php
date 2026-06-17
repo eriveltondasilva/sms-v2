@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration
@@ -21,7 +22,7 @@ return new class() extends Migration
 
             // #
 
-            $table->text('content');
+            $table->string('content');
 
             $table->text('objectives')->nullable();
             $table->text('methodology')->nullable();
@@ -43,12 +44,19 @@ return new class() extends Migration
 
             // #
 
-            $table->unique(['teaching_assignment_id', 'starts_on'], 'unique_lp_ta_starts_on');
+            $table->unique(['teaching_assignment_id', 'start_date'], 'unique_lp_ta_start_date');
 
+            $table->index(['teaching_assignment_id', 'start_date', 'end_date'], 'idx_lp_ta_date_range');
             $table->index(['school_id', 'academic_period_id']);
             $table->index('academic_period_id');
             $table->index('created_by');
         });
+
+        DB::statement("
+            ALTER TABLE lesson_plans
+            ADD CONSTRAINT check_lesson_plan_date_range
+            CHECK (end_date >= start_date)
+        ");
     }
 
     public function down(): void

@@ -49,17 +49,23 @@ return new class() extends Migration
         });
 
         // # Checks
+        DB::statement("
+                ALTER TABLE assessments
+                ADD CONSTRAINT check_assessment_category
+                CHECK (category IN ('regular', 'period_recovery', 'final_exam'))
+        ");
+
         DB::statement('
             ALTER TABLE assessments
             ADD CONSTRAINT check_assessment_order
             CHECK ("order" > 0)
         ');
 
-        DB::statement("
-                ALTER TABLE assessments
-                ADD CONSTRAINT check_assessment_category
-                CHECK (category IN ('regular', 'period_recovery', 'final_exam'))
-        ");
+        DB::statement('
+            ALTER TABLE assessments
+            ADD CONSTRAINT check_assessment_scores_positive
+            CHECK (max_score > 0 AND weight > 0)
+        ');
     }
 
     public function down(): void
